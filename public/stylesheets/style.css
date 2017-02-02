@@ -42,7 +42,7 @@ html {
 
 .brand {
     color: #333;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 0.3px;
     word-spacing: 1.5px;
     /*    font-weight: 600;*/
@@ -50,11 +50,13 @@ html {
     display: flex;
     flex-direction: row;
     align-items: center;
+    text-transform: uppercase;
 }
 
 .logo {
     margin: 14px;
-    height: 38px
+    height: 52px;
+    margin-left: -14px;
 }
 
 .search {
@@ -72,8 +74,10 @@ html {
     flex-direction: row;
     align-items: flex-end;
     align-content: flex-end;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: bold;
     justify-content: flex-end;
+    text-transform: uppercase;
 }
 
 .link {
@@ -193,8 +197,8 @@ a {
 /* - - - - - - - - - - */
 
 .concepts {
-    width: 510px;
-    margin-right: 40px;
+    width: 450px;
+    margin-right: 100px;
 }
 
 
@@ -206,17 +210,52 @@ a {
     flex-direction: column;
 }
 
+.conversation-title-area {
+    display: flex;
+    flex-direction: row;
+}
+
+.conversation-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.conversation-icon {
+    height: 44px;
+}
+
+.conversation-description {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    justify-content: center;
+}
+
+.conversation-header {
+    display: flex;
+    color: #333;
+    flex-direction: row;
+    font-size: 13px;
+    font-weight: bold;
+    justify-content: flex-end;
+    text-transform: uppercase;
+    line-height: 20px;
+}
+
 .conversation-title {
     display: flex;
     color: #333;
     flex-direction: row;
-    font-size: 14px;
+    font-size: 10px;
     justify-content: flex-end;
+    line-height: 20px;
+    text-transform: uppercase;
 }
 
 .conversation-flow {
     display: flex;
-    border: 1px solid #888;
+    border: 1px dashed #888;
     height: 400px;
     width: 250px;
     border-radius: 4px;
@@ -227,7 +266,10 @@ a {
     display: flex;
     border: 1px solid #888;
     height: 70px;
-    width: 250px;
+    width: 246px;
     border-radius: 4px;
     margin-top: 20px;
+}
+
+
 }

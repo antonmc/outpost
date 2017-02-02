@@ -26,7 +26,7 @@ var watson = require('watson-developer-cloud');
 var alchemycreds = require('./config/credentials.json');
 
 var alchemy_language = watson.alchemy_language({
-    api_key: alchemycreds.credentials.apikey
+    api_key: alchemycreds[0].credentials.apikey
 });
 
 var async = require('async');
@@ -54,6 +54,27 @@ var params = {
 };
 
 var body = '';
+
+app.post('/outpost', function (req, res) {
+
+    console.log('called outpost');
+
+    console.log(req.body);
+
+    // ensure user policies are loaded
+    if (!req.body.context || !req.body.context.system) {
+        getUserPolicy(req, function (err, doc) {
+            if (err) {
+                res.status(err.code || 500).json(err);
+            } else {
+                //                processChatMessage(req, res);
+            }
+        });
+    } else {
+        //        processChatMessage(req, res);
+    }
+});
+
 
 client.get('statuses/user_timeline', params, function (error, tweets, response) {
     if (!error) {

@@ -15,7 +15,7 @@
         <div class="bannerContent">
             <div class="brand">
 
-                <!-- <img src="https://ace-common-production-20161206-084113.ng.bluemix.net/cache/784-1688551103/api/v4/img/bluemix-logo-2016-feb.svg" class="logo"> -->
+                <img src="images/outpost.svg" class="logo">
                 <div class="brandname"> <strong>Outpost</strong></div>
             </div>
 
@@ -30,13 +30,22 @@
         <div class="divide">
             <div class="concepts">
                 <div class="welcome">
-                    <p>Outpost is first of all a chatbot built around <strong>Yelp</strong>. You can ask it the same kinds of things you would search for on <strong>Yelp</strong>. Outpost can also work in an automatic way by mining your <strong>Twitter</strong> and <strong>Pinterest</strong> feeds for insight to make reccomendations.</p>
+                    <p>Outpost is a chatbot built around <strong>Yelp</strong>. </p>
+                    <p>Outpost can also work in an automatic way by mining your <strong>Twitter</strong> and <strong>Pinterest</strong> feeds for insight, to make reccomendations.</p>
                 </div>
             </div>
             <div class="conversation">
-                <div class="conversation-title">Chat with Scout</div>
+                <div class="conversation-title-area">
+                    <div class="conversation-image"><img class="conversation-icon" src="images/scout.svg">
+                    </div>
+                    <div class="conversation-description">
+                        <div class="conversation-header">Search Yelp</div>
+
+                        <div class="conversation-title">Chat with Scout</div>
+                    </div>
+                </div>
                 <div class="conversation-flow"></div>
-                <div class="conversation-input"></div>
+                <textarea rows="4" id="chatMessage" class="conversation-input" placeholder="chat about your policies ... " onkeypress="return newEvent(event)"></textarea>
             </div>
         </div>
 
