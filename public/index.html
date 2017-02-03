@@ -30,8 +30,37 @@
         <div class="divide">
             <div class="concepts">
                 <div class="welcome">
-                    <p>Outpost is a chatbot built around <strong>Yelp</strong>. </p>
+                    <p><strong>Outpost</strong> is a chatbot built around <strong>Yelp</strong>. </p>
                     <p>Outpost can also work in an automatic way by mining your <strong>Twitter</strong> and <strong>Pinterest</strong> feeds for insight, to make reccomendations.</p>
+                </div>
+                <div class="details">
+                    <div class="social">
+                        <div class="detail-header">
+                            <div class="detail-number">1</div>
+                            <div class="social-title">ADD SOCIAL FEEDS</div>
+                        </div>
+                        <div class="social-instructions">[ To add feeds tell Scout to 'add my twitter id' or 'add my pinterest id' ]</div>
+                        <div class="feeds">
+                            <div class="social-feed">
+                                <div class="feed-title">TWITTER</div>
+                                <div class="feed-id">@antonmc</div>
+                            </div>
+                            <div class="social-feed">
+                                <div class="feed-title">PINTEREST</div>
+                                <div class="feed-id">antonmc</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="recommendations">
+                        <div class="detail-header">
+                            <div class="detail-number">2</div>
+                            <div class="social-title">VIEW RECOMMENDATION MIND MAP</div>
+                        </div>
+
+                        <div class="recommendation-map"></div>
+
+                    </div>
                 </div>
             </div>
             <div class="conversation">
@@ -44,12 +73,18 @@
                         <div class="conversation-title">Chat with Scout</div>
                     </div>
                 </div>
-                <div class="conversation-flow"></div>
-                <textarea rows="4" id="chatMessage" class="conversation-input" placeholder="chat about your policies ... " onkeypress="return newEvent(event)"></textarea>
+                <div class="conversation-flow" id="conversation">
+                    <div class="scoutbot">
+                        <div class="scoutbot-content">Hello, how are you?</div>
+                        <div class="scoutbot-tail"></div>
+                    </div>
+                </div>
+                <textarea rows="4" id="chatMessage" class="conversation-input" placeholder="chat to search Yelp ... " onkeypress="return catchTypedInput(event)"></textarea>
             </div>
         </div>
 
     </div>
 </body>
+<script src="src/outpost.js"></script>
 
 </html>

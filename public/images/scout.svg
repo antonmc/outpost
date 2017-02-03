@@ -99,23 +99,21 @@
 		<line fill="none" stroke="#000000" stroke-width="12" stroke-miterlimit="10" x1="-206.358" y1="35.851" x2="-206.358" y2="84.823"/>
 </g>
 <g>
-	<path fill="#E5C17E" stroke="#000000" stroke-width="14" stroke-miterlimit="10" d="M151,280.994l-6-81.968v3.267v-55.646
-		c0-1.552,0.447-2.957,1.172-3.975c0.724-1.018,1.724-1.646,2.828-1.646h101h101c1.104,0,2.104,0.629,2.828,1.646
-		c0.725,1.018,1.172,2.423,1.172,3.975v55.646v-3.267l-6,81.968"/>
-	<path fill="#85A647" stroke="#000000" stroke-width="15.2195" stroke-miterlimit="10" d="M450,445.299
+	<path fill="#85A647" stroke="#000000" stroke-width="15.2195" stroke-miterlimit="10" d="M450,439.299
 		c0-44.184-89.542-80-200.001-80c-110.456,0-199.999,35.816-199.999,80"/>
-	<path fill="#E5C17E" stroke="#000000" stroke-width="14" stroke-miterlimit="10" d="M349,278.994
-		c0,55.264-44.324,100.064-99,100.064s-99-44.801-99-100.064"/>
-	<line fill="none" stroke="#000000" stroke-width="14" stroke-miterlimit="10" x1="250" y1="289.689" x2="250" y2="329.689"/>
-	<line fill="none" stroke="#000000" stroke-width="14" stroke-miterlimit="10" x1="275" y1="294.764" x2="275" y2="324.764"/>
-	<line fill="none" stroke="#000000" stroke-width="14" stroke-miterlimit="10" x1="225" y1="294.689" x2="225" y2="324.689"/>
-	<circle stroke="#000000" stroke-width="14" stroke-miterlimit="10" cx="211.199" cy="230.353" r="10.351"/>
-	<circle stroke="#000000" stroke-width="14" stroke-miterlimit="10" cx="288.803" cy="230.353" r="10.35"/>
-	<path fill="none" stroke="#000000" stroke-width="14" stroke-miterlimit="10" d="M350,230.471
-		c13.562,0,24.556,10.994,24.556,24.556S363.562,279.582,350,279.582"/>
-	<path fill="none" stroke="#000000" stroke-width="14" stroke-miterlimit="10" d="M148.278,279.582
+	<path fill="#E5C17E" stroke="#000000" stroke-width="14" stroke-miterlimit="10" d="M349,274.424l9-113.527
+		c0-9.332-23.222-21.897-28.429-21.897H170.428C165.222,139,141,151.565,141,160.897l10,113.527v-3.43
+		c0,55.264,44.324,100.064,99,100.064s99-44.801,99-100.064"/>
+	<line fill="none" stroke="#000000" stroke-width="12" stroke-miterlimit="10" x1="250" y1="272.689" x2="250" y2="322.689"/>
+	<line fill="none" stroke="#000000" stroke-width="12" stroke-miterlimit="10" x1="280" y1="277.764" x2="280" y2="317.764"/>
+	<line fill="none" stroke="#000000" stroke-width="12" stroke-miterlimit="10" x1="220" y1="277.689" x2="220" y2="317.689"/>
+	<circle stroke="#000000" stroke-width="16" stroke-miterlimit="10" cx="211.199" cy="224.353" r="10.351"/>
+	<circle stroke="#000000" stroke-width="16" stroke-miterlimit="10" cx="288.803" cy="224.353" r="10.35"/>
+	<path fill="none" stroke="#000000" stroke-width="14" stroke-miterlimit="10" d="M355,222.471
+		c13.562,0,24.556,10.994,24.556,24.556S368.562,271.582,355,271.582"/>
+	<path fill="none" stroke="#000000" stroke-width="14" stroke-miterlimit="10" d="M144.278,271.582
 		c-13.562,0-24.556-10.994-24.556-24.556s10.994-24.556,24.556-24.556"/>
-	<line fill="none" stroke="#000000" stroke-width="15.6525" stroke-miterlimit="10" x1="250" y1="61.051" x2="250" y2="161.051"/>
-	<circle stroke="#000000" stroke-width="20" stroke-miterlimit="10" cx="250" cy="65.051" r="10.351"/>
+	<line fill="none" stroke="#000000" stroke-width="10" stroke-miterlimit="10" x1="250" y1="81" x2="250" y2="181"/>
+	<circle stroke="#000000" stroke-width="22" stroke-miterlimit="10" cx="250" cy="63.051" r="10.351"/>
 </g>
 </svg>
