@@ -7,6 +7,7 @@
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
 var express = require('express');
+var bodyParser = require('body-parser');
 
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
@@ -14,6 +15,8 @@ var cfenv = require('cfenv');
 
 // create a new express server
 var app = express();
+
+app.use(bodyParser());
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
@@ -55,32 +58,33 @@ var params = {
 
 var body = '';
 
+var chatbot = require('./bot.js');
+
 app.post('/outpost', function (req, res) {
+
+    res.setHeader('Content-Type', 'application/json');
 
     console.log('called outpost');
 
     console.log(req.body);
 
+    chatbot.sendMessage(req.body.text, req.body.context, function (response) {
+
+        console.log(response);
+
+        res.send(JSON.stringify(response, null, 3));
+
+    });
+
     // ensure user policies are loaded
-    if (!req.body.context || !req.body.context.system) {
-        getUserPolicy(req, function (err, doc) {
-            if (err) {
-                res.status(err.code || 500).json(err);
-            } else {
-                //                processChatMessage(req, res);
-            }
-        });
-    } else {
-        //        processChatMessage(req, res);
-    }
+    //    if (!req.body.context || !req.body.context.system) {}
 });
 
 
 client.get('statuses/user_timeline', params, function (error, tweets, response) {
     if (!error) {
-        console.log(tweets.length);
-
-        console.log(tweets[0].text);
+        //        console.log(tweets.length);//
+        //        console.log(tweets[0].text);
     }
 
     tweets.forEach(function (tweet) {
@@ -90,7 +94,7 @@ client.get('statuses/user_timeline', params, function (error, tweets, response) 
         body = body + cleaned;
     })
 
-    console.log(body);
+    //    console.log(body);
 
     var parameters = {
         text: body,
@@ -101,56 +105,55 @@ client.get('statuses/user_timeline', params, function (error, tweets, response) 
     var concepts = '';
     var entities = '';
 
-    alchemy_language.keywords(parameters, function (err, response) {
-
-        if (err) {
-            console.log('error:', err);
-        } else {
-
-            response.keywords.forEach(function (concept) {
-                keywords = keywords + concept.text + '\n';
-            });
-
-        }
-
-        console.log(keywords);
-
-    });
-
-
-    alchemy_language.concepts(parameters, function (err, response) {
-
-        if (err) {
-            console.log('error:', err);
-        } else {
-
-            response.concepts.forEach(function (concept) {
-                concepts = concepts + concept.text + '\n';
-            });
-
-        }
-
-        console.log(concepts);
-
-    });
-
-    alchemy_language.entities(parameters, function (err, response) {
-
-        if (err) {
-            console.log('error:', err);
-        } else {
-
-            if (response.concepts) {
-                response.concepts.forEach(function (concept) {
-                    entities = entities + concept.text + '\n';
-                });
-            }
-        }
-
-        console.log(concepts);
-
-    });
-
+    //    alchemy_language.keywords(parameters, function (err, response) {
+    //
+    //        if (err) {
+    //            console.log('error:', err);
+    //        } else {
+    //
+    //            response.keywords.forEach(function (concept) {
+    //                keywords = keywords + concept.text + '\n';
+    //            });
+    //
+    //        }
+    //
+    //        console.log(keywords);
+    //
+    //    });
+    //
+    //
+    //    alchemy_language.concepts(parameters, function (err, response) {
+    //
+    //        if (err) {
+    //            console.log('error:', err);
+    //        } else {
+    //
+    //            response.concepts.forEach(function (concept) {
+    //                concepts = concepts + concept.text + '\n';
+    //            });
+    //
+    //        }
+    //
+    //        console.log(concepts);
+    //
+    //    });
+    //
+    //    alchemy_language.entities(parameters, function (err, response) {
+    //
+    //        if (err) {
+    //            console.log('error:', err);
+    //        } else {
+    //
+    //            if (response.concepts) {
+    //                response.concepts.forEach(function (concept) {
+    //                    entities = entities + concept.text + '\n';
+    //                });
+    //            }
+    //        }
+    //
+    //        console.log(concepts);
+    //
+    //    });
 
 });
 

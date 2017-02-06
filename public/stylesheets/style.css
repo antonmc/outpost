@@ -269,6 +269,9 @@
         border-radius: 4px;
         margin-top: 20px;
         background: white;
+        overflow-y: auto;
+        overflow-x: hidden;
+        display: flex;
     }
     
     .conversation-input {

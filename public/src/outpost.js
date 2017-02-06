@@ -1,3 +1,7 @@
+var params = {}; // Object for parameters sent to the Watson Conversation service
+var context;
+
+
 /**
  * @summary Enter Keyboard Event.
  *
@@ -6,7 +10,7 @@
  * @function newEvent
  * @param {Object} e - Information about the keyboard event.
  */
-function catchTypedInput(e) {
+function handleInput(e) {
     // Only check for a return/enter press - Event 13
     if (e.which === 13 || e.keyCode === 13) {
 
@@ -22,7 +26,7 @@ function catchTypedInput(e) {
             personBubble(text);
             userInput.value = '';
 
-            //            userMessage(text);
+            sendMessageToWatson(text);
 
         } else {
 
@@ -33,6 +37,50 @@ function catchTypedInput(e) {
             return false;
         }
     }
+}
+
+function sendMessageToWatson(message) {
+
+    // Set parameters for payload to Watson Conversation
+
+    params.text = message; // User defined text to be sent to service
+
+    if (context) {
+        params.context = context;
+    }
+
+    var xhr = new XMLHttpRequest();
+    var uri = '/outpost';
+
+    xhr.open('POST', uri, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function () {
+
+        // Verify if there is a success code response and some text was sent
+        if (xhr.status === 200 && xhr.responseText) {
+
+            var response = JSON.parse(xhr.responseText);
+            text = response.output.text; // Only display the first response
+            context = response.context; // Store the context for next round of questions
+
+            console.log('context: ' + context);
+
+            console.log("Got response from Watson: ", text[0]);
+
+            scoutBubble(text[0]);
+
+        } else {
+            console.error('Server error for Conversation. Return status of: ', xhr.statusText);
+        }
+    };
+
+    xhr.onerror = function () {
+        console.error('Network error trying to send message!');
+    };
+
+    console.log(JSON.stringify(params));
+
+    xhr.send(JSON.stringify(params));
 }
 
 function personBubble(message) {
