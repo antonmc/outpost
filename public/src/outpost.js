@@ -1,6 +1,100 @@
 var params = {}; // Object for parameters sent to the Watson Conversation service
 var context;
 
+function initialize() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    console.log("Latitude: " + position.coords.latitude +
+        " Longitude: " + position.coords.longitude);
+
+    var water = "#e4eef0";
+    var landscape = "#c0d8dd";
+    var maplabel = "#333333";
+
+    var styles = [
+
+        {
+            "featureType": "landscape",
+            "stylers": [{
+                "visibility": "simplified"
+            }]
+        },
+        {
+            "featureType": "water",
+            "stylers": [{
+                "visibility": "simplified"
+            }, {
+                "color": water
+            }]
+        },
+        {
+            "featureType": "landscape",
+            "stylers": [{
+                "color": landscape
+            }]
+        },
+        {
+            "featureType": "road",
+            "stylers": [{
+                "visibility": "on"
+            }]
+        },
+        {
+            "featureType": "poi",
+            "stylers": [{
+                "visibility": "on"
+            }]
+        },
+        {
+            "featureType": "administrative.country",
+            "elementType": "geometry.stroke",
+            "stylers": [{
+                "color": maplabel
+            }, {
+                "weight": 0.5
+            }]
+        },
+        {
+            "featureType": "administrative",
+            "elementType": "labels",
+            "stylers": [{
+                "color": maplabel
+            }, {
+                "weight": 0.1
+            }]
+        },
+        {
+            "featureType": "administrative.province",
+            "stylers": [{
+                "visibility": "on"
+            }]
+        }
+
+	];
+
+
+    var mapOptions = {
+        mapTypeControlOptions: {
+            mapTypeIds: ['Styled']
+        },
+        center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        zoom: 8,
+        mapTypeId: 'Styled'
+    };
+
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    var styledMapType = new google.maps.StyledMapType(styles, {
+        name: 'Recommendations'
+    });
+    map.mapTypes.set('Styled', styledMapType);
+}
 
 /**
  * @summary Enter Keyboard Event.
@@ -101,4 +195,11 @@ function scoutBubble(message) {
 
     var conversation = document.getElementById('conversation');
     conversation.appendChild(bubble);
+}
+
+function flip(event) {
+    console.log('flip');
+
+    var flipcontainer = document.getElementById('flipcontainer');
+    flipcontainer.classList.toggle('hover');
 }

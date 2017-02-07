@@ -8,9 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/style.css">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <!--    <link href='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9UTKaObKmwVVc3uggMSJjOeWk_nxAdR4&sensor=true"></script>
+    </script>
+
 </head>
 
-<body>
+<body onload="initialize()">
     <nav class="banner" role="navigation">
         <div class="bannerContent">
             <div class="brand">
@@ -27,9 +31,24 @@
 
     <div class="layout">
 
+        <div class="subtext">
+            <div class="welcome"><strong>Outpost</strong> is a set of cognitive explorations with <strong>Yelp</strong></div>
+            <div class="switcharea">
+                <label>mindmap</label>
+                <label class="switch">
+                    <input type="checkbox" checked onchange="flip()">
+                    <div class="slider round"></div>
+                </label>
+                <label>chatbot</label>
+            </div>
+        </div>
+
         <div class="divide">
             <div class="concepts">
-                <div class="welcome">
+
+
+                <div id='map' style='width: 100%; height: 634px;border-radius:5px;'></div>
+                <!-- div class="welcome">
                     <p><strong>Outpost</strong> is a chatbot built around <strong>Yelp</strong>. </p>
                     <p>Outpost can also work in an automatic way by mining your <strong>Twitter</strong> and <strong>Pinterest</strong> feeds for insight, to make reccomendations.</p>
                 </div>
@@ -61,30 +80,82 @@
                         <div class="recommendation-map"></div>
 
                     </div>
-                </div>
+                </div -->
             </div>
-            <div class="conversation">
-                <div class="conversation-title-area">
-                    <div class="conversation-image"><img class="conversation-icon" src="images/scout.svg">
-                    </div>
-                    <div class="conversation-description">
-                        <div class="conversation-header">Search Yelp</div>
 
-                        <div class="conversation-title">Chat with Scout</div>
+            <div class="flip-container" id="flipcontainer">
+                <div class="flipper">
+                    <div class="front">
+                        <div class="conversation">
+                            <div class="conversation-title-area">
+                                <div class="conversation-image"><img class="conversation-icon" src="images/scout.svg">
+                                </div>
+                                <div class="conversation-description">
+                                    <div class="conversation-header">Search Yelp</div>
+
+                                    <div class="conversation-title">Chat with Scout</div>
+                                </div>
+                            </div>
+                            <div class="conversation-flow" id="conversation">
+                                <div class="scoutbot">
+                                    <div class="scoutbot-content">I'm Scout, a chatbot designed to help you find things on Yelp ... </div>
+                                    <div class="scoutbot-tail"></div>
+                                </div>
+                            </div>
+                            <textarea rows="4" id="chatMessage" class="conversation-input" placeholder="chat to search Yelp ... " onkeypress="return handleInput(event)"></textarea>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div class="mindmap">
+                            <div class="conversation-title-area">
+                                <div class="conversation-image"><img class="conversation-icon" src="images/fiddle.svg">
+                                </div>
+                                <div class="conversation-description">
+                                    <div class="conversation-header">Social Data Concepts</div>
+
+                                    <div class="conversation-title">Recommendations using your media</div>
+                                </div>
+                            </div>
+                            <div class="details">
+                                <div class="social">
+                                    <div class="detail-header">
+                                        <div class="detail-number">1</div>
+                                        <div class="social-title">ADD SOCIAL FEEDS</div>
+                                    </div>
+                                    <!--                                    <div class="social-instructions">[ To add feeds tell Scout to 'add my twitter id' or 'add my pinterest id' ]</div>-->
+                                    <div class="feeds">
+                                        <div class="social-feed">
+                                            <div class="feed-title">TWITTER</div>
+                                            <div class="feed-id">@antonmc</div>
+                                        </div>
+                                        <div class="social-feed">
+                                            <div class="feed-title">PINTEREST</div>
+                                            <div class="feed-id">antonmc</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="recommendations">
+                                    <div class="detail-header">
+                                        <div class="detail-number">2</div>
+                                        <div class="social-title">VIEW RECOMMENDATION MIND MAP</div>
+                                    </div>
+
+                                    <div class="recommendation-map"></div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="conversation-flow" id="conversation">
-                    <div class="scoutbot">
-                        <div class="scoutbot-content">Hi, I'm Scout and can help search Yelp ...</div>
-                        <div class="scoutbot-tail"></div>
-                    </div>
-                </div>
-                <textarea rows="4" id="chatMessage" class="conversation-input" placeholder="chat to search Yelp ... " onkeypress="return handleInput(event)"></textarea>
             </div>
+
         </div>
-
     </div>
+
 </body>
+
+<!--<script src='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>-->
 <script src="src/outpost.js"></script>
 
 </html>
