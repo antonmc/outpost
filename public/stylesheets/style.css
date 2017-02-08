@@ -380,7 +380,7 @@ a {
 }
 
 .recommendation-map {
-    height: 370px;
+    height: 340px;
     display: flex;
     flex-direction: column;
     padding-left: 30px;
@@ -393,6 +393,8 @@ a {
     display: flex;
     flex-direction: row;
     align-content: center;
+    padding-top: 15px;
+    border-top: 1px dashed #888;
 }
 
 .detail-number {
@@ -610,14 +612,25 @@ input:checked + .slider:before {
     border: 1px solid #ccc;
 }
 
+
+/*
 .flip-container:hover .flipper,
 .flip-container.hover .flipper {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}*/
+
+.rotator {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
     -o-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
 
+
+/*
 .flip-container:hover .flipper,
 .flip-container.hover .flipper {
     -webkit-transform: rotateY(180deg);
@@ -625,6 +638,7 @@ input:checked + .slider:before {
     -o-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
+*/
 
 .flip-container,
 .front,

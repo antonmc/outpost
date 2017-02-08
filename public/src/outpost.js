@@ -200,6 +200,6 @@ function scoutBubble(message) {
 function flip(event) {
     console.log('flip');
 
-    var flipcontainer = document.getElementById('flipcontainer');
-    flipcontainer.classList.toggle('hover');
+    var flipcontainer = document.getElementById('flipper');
+    flipcontainer.classList.toggle('rotator');
 }
