@@ -730,3 +730,7 @@ input:checked + .slider:before {
     align-items: center;
     justify-content: flex-end;
 }
+
+.gm-style-mtc {
+    color: blue !important;
+}

@@ -13,6 +13,9 @@ function showPosition(position) {
     console.log("Latitude: " + position.coords.latitude +
         " Longitude: " + position.coords.longitude);
 
+
+    console.log(position);
+
     var water = "#e4eef0";
     var landscape = "#c0d8dd";
     var maplabel = "#333333";

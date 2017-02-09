@@ -40,33 +40,48 @@ var EMOTION = 0;
 var LANGUAGE = 1;
 var SOCIAL = 2;
 
+var latitude;
+var longitude;
 
-var yelp = require("node-yelp");
+'use strict';
 
+const yelp = require('yelp-fusion');
 
-var client = yelp.createClient({
-    oauth: {
-        "consumer_key": "xxxxxxxxxxxxxxxxxxxxxxxx",
-        "consumer_secret": "xxxxxxxxxxxxxxxxxxxxxxxx",
-        "token": "xxxxxxxxxxxxxxxxxxxxxxxx",
-        "token_secret": "xxxxxxxxxxxxxxxxxxxxxxxx"
-    },
+const token = yelp.accessToken('', '').then(response => {
+    console.log(response.jsonBody.access_token);
 
-    // Optional settings: 
-    httpClient: {
-        maxSockets: 25 // ~> Default is 10 
-    }
+    const client = yelp.client(response.jsonBody.access_token);
+
+    client.search({
+        term: 'vegan',
+        //        location: 'ottawa',
+        latitude: 45.3407962,
+        longitude: -75.6906025
+    }).then(response => {
+        console.log(response.jsonBody);
+    }).catch(e => {
+        console.log(e);
+    });
+
+}).catch(e => {
+    console.log(e);
 });
+
+
+console.log('token: ');
+
+console.log(token);
+
 
 var alchemycreds = require('./config/credentials.json');
 
 var Twitter = require('twitter');
 
-var client = new Twitter({
-    consumer_key: 'T8eAr9Frhc0oPi6VnagQOEOur',
-    consumer_secret: 'ASRuFAzn0b3VPmfo6mdGXYau4BSs9HOtdu2evHm5IcedK8qjat',
-    access_token_key: '15673818-vUX8sLguRCL0NVtn4AQXB6gXVDP8Ni4LUOwl6U2z6',
-    access_token_secret: 'sHJ1rQiukME7roJDmG333AT39rhn2AksnVxAbg3BGOeks'
+var twitterclient = new Twitter({
+    consumer_key: '',
+    consumer_secret: '',
+    access_token_key: '',
+    access_token_secret: ''
 });
 
 var params = {
@@ -99,7 +114,26 @@ app.post('/outpost', function (req, res) {
 });
 
 
-client.get('statuses/user_timeline', params, function (error, tweets, response) {
+/* For setting the person's location */
+
+app.post('/location', function (req, res) {
+
+    res.setHeader('Content-Type', 'application/json');
+
+    console.log('called location');
+
+    console.log(req.body);
+
+    latitude = req.body.latitude;
+    longitude = req.body.longitude;
+
+    res.send(JSON.stringify(response, null, 3));
+
+});
+
+
+
+twitterclient.get('statuses/user_timeline', params, function (error, tweets, response) {
     if (!error) {
         //        console.log(tweets.length);//
         //        console.log(tweets[0].text);
