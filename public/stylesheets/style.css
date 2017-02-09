@@ -221,9 +221,9 @@ a {
     flex-direction: column;
     padding: 20px;
     /* padding-left: 30px; */
-    background: #fcfdfd;
+    background: #f6f9fa;
     border-left: 3px solid #e4eef0;
-    border: 1px solid #e4eef0;
+    border: 1px solid #dbe9eb;
     border-radius: 4px;
     /* padding: 10px; */
 }
@@ -236,10 +236,10 @@ a {
     /* padding-left: 30px; */
     background: #fcfdfd;
     border-left: 3px solid #e4eef0;
-    border: 1px solid #e4eef0;
+    border: 1px solid #dae4c7;
     border-radius: 4px;
     /* padding: 10px; */
-    background: white;
+    background: #f2f6ec;
 }
 
 .conversation-title-area {
@@ -294,7 +294,7 @@ a {
     border-radius: 4px;
     margin-top: 20px;
     background: white;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     display: flex;
 }
@@ -364,6 +364,7 @@ a {
     border-radius: 4px;
     display: flex;
     flex-direction: column;
+    background: white;
     justify-content: center;
     align-items: center;
     margin-top: 10px;
@@ -387,6 +388,7 @@ a {
     border: 1px dashed #A5C8CF;
     /* width: 100%; */
     border-radius: 4px;
+    background: white;
 }
 
 .detail-header {
@@ -414,7 +416,7 @@ a {
 }
 
 .scoutbot {
-    display: flex;
+    display: block;
     flex-direction: column;
 }
 
@@ -445,7 +447,7 @@ a {
 }
 
 .person {
-    display: flex;
+    display: block;
     flex-direction: column;
     align-self: flex-end;
     align-content: flex-end;
@@ -473,10 +475,13 @@ a {
     border-width: 8px 8px 0px 8px;
     border-color: #e4eef0 transparent;
     display: block;
-    margin-right: 20px;
+    /* margin-right: 200px; */
     width: 0;
     z-index: 1;
     bottom: -15px;
+    right: 20px;
+    margin-right: 20px;
+    float: right;
 }
 
 .subtext {
@@ -612,33 +617,12 @@ input:checked + .slider:before {
     border: 1px solid #ccc;
 }
 
-
-/*
-.flip-container:hover .flipper,
-.flip-container.hover .flipper {
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    -o-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}*/
-
 .rotator {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
     -o-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
-
-
-/*
-.flip-container:hover .flipper,
-.flip-container.hover .flipper {
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    -o-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-*/
 
 .flip-container,
 .front,
@@ -681,4 +665,68 @@ input:checked + .slider:before {
     -o-transform: rotateY(180deg);
     transform: rotateY(180deg);
     background: #f8f8f8;
+}
+
+.builttext {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 800px;
+    margin-top: 30px;
+    border-top: 2px solid #e6edda;
+    padding-top: 10px;
+}
+
+.built {
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+    line-height: 24px;
+    font-size: 11px;
+    color: #84a546;
+}
+
+.built a {
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #76943f;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.githublabel {
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+    line-height: 24px;
+}
+
+.githubimage {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.githubarea {
+    font-size: 11px;
+    /* margin-top: 26px; */
+    /* background: #f5e5c8; */
+    /* padding: 10px; */
+    /* padding-top: 25px; */
+    /* padding-bottom: 10px; */
+    border-radius: 4px;
+    color: #84a546;
+    line-height: 24px;
+    /* text-align: center; */
+    /* border: 1px dashed #e4c17e; */
+    /* padding: 10px; */
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 140px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-end;
 }

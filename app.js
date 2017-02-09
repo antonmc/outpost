@@ -40,6 +40,24 @@ var EMOTION = 0;
 var LANGUAGE = 1;
 var SOCIAL = 2;
 
+
+var yelp = require("node-yelp");
+
+
+var client = yelp.createClient({
+    oauth: {
+        "consumer_key": "xxxxxxxxxxxxxxxxxxxxxxxx",
+        "consumer_secret": "xxxxxxxxxxxxxxxxxxxxxxxx",
+        "token": "xxxxxxxxxxxxxxxxxxxxxxxx",
+        "token_secret": "xxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+
+    // Optional settings: 
+    httpClient: {
+        maxSockets: 25 // ~> Default is 10 
+    }
+});
+
 var alchemycreds = require('./config/credentials.json');
 
 var Twitter = require('twitter');
