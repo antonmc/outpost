@@ -278,20 +278,11 @@ function sendMessageToWatson(message) {
                     return parseFloat(b.review_count) - parseFloat(a.review_count);
                 });
 
-
-
-                //                    var sorted = business.sort(compare);
-
-                console.log(response.yelp.businesses);
-
-
                 var highestRating = byRating[0].rating;
 
                 var element = byRating[0];
 
                 response.yelp.businesses.forEach(function (business) {
-
-                    console.log(business.name);
 
                     var cardinalRed = '#CF413C';
 
@@ -304,6 +295,7 @@ function sendMessageToWatson(message) {
                     var position = new google.maps.LatLng(parseFloat(business.coordinates.latitude), parseFloat(business.coordinates.longitude));
 
                     var marker = new google.maps.Marker({
+                        name: business.name,
                         position: position,
                         icon: {
                             path: google.maps.SymbolPath.CIRCLE,
@@ -320,13 +312,32 @@ function sendMessageToWatson(message) {
                     createInfoWindow(marker, business);
 
                     markers.push(marker);
-
                 })
             }
 
             scoutBubble(text[0]);
-            scoutBubble('The highest rated restaurant with the most reviews is: ' + element.name);
-            scoutBubble('The most reviewed restaurant is: ' + byRating[0].name + ' with ' + byRating[0].review_count + ' reviews and a rating of ' + byRating[0].rating);
+
+            if (element.name !== byRating[0].name) {
+
+                scoutBubble('Well, the highest rated restaurant with the most reviews is: ' + element.name);
+
+                scoutBubble('The most reviewed restaurant is: ' + byRating[0].name + ' with ' + byRating[0].review_count + ' reviews and a rating of ' + byRating[0].rating);
+
+            } else {
+
+                scoutBubble('The most reviewed restaurant is: ' + byRating[0].name + '.');
+                scoutBubble('It is also the highest rated, with ' + byRating[0].review_count + ' reviews and a rating of ' + byRating[0].rating);
+
+                for (var f = 0; f < markers.length; markers++) {
+
+                    if (markers[f].name === byRating[0].name) {
+                        markers[f].infowindow.open(map);
+                    }
+
+                }
+
+
+            }
 
         } else {
             console.error('Server error for Conversation. Return status of: ', xhr.statusText);
@@ -350,6 +361,9 @@ function personBubble(message) {
 
     var conversation = document.getElementById('conversation');
     conversation.appendChild(bubble);
+
+    var objDiv = document.getElementById("conversation");
+    objDiv.scrollTop = objDiv.scrollHeight;
 }
 
 function scoutBubble(message) {
@@ -360,6 +374,9 @@ function scoutBubble(message) {
 
     var conversation = document.getElementById('conversation');
     conversation.appendChild(bubble);
+
+    var objDiv = document.getElementById("conversation");
+    objDiv.scrollTop = objDiv.scrollHeight;
 }
 
 function flip(event) {

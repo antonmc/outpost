@@ -62,8 +62,7 @@ const token = yelp.accessToken('lQtWce8qF1uBCGBgJSf72g', 'QL0CaFA8j8rC8zzCqxZw3V
         latitude: 45.3407962,
         longitude: -75.6906025
     }).then(response => {
-        console.log(response.jsonBody);
-    }).catch(e => {
+        //        console.log(response.jsonBody);    }).catch(e => {
         console.log(e);
     });
 
@@ -72,10 +71,21 @@ const token = yelp.accessToken('lQtWce8qF1uBCGBgJSf72g', 'QL0CaFA8j8rC8zzCqxZw3V
 });
 
 
-console.log('token: ');
+var PDK = require('node-pinterest');
+var pinterest = PDK.init('4867289310860159927');
 
-console.log(token);
+//pinterest.api('antonmc').then(console.log); 
 
+var options = {
+    qs: {
+        fields: "antonmc,Anton",
+        limit: 10
+    }
+};
+
+pinterest.api('antonmc/pins', options).then(console.log);
+
+/* - - - - - - - - - - */
 
 var alchemycreds = require('./config/credentials.json');
 
@@ -103,11 +113,7 @@ app.post('/outpost', function (req, res) {
 
     console.log('called outpost');
 
-    console.log(req.body);
-
     chatbot.sendMessage(req.body.text, req.body.context, function (response) {
-
-        console.log(response.intents[0].intent);
 
         if (response.intents[0].intent === 'cuisine') {
 
@@ -123,11 +129,7 @@ app.post('/outpost', function (req, res) {
 
             }).then(out => {
 
-
                 response.yelp = out.jsonBody;
-
-                console.log(response);
-
 
                 res.send(JSON.stringify(response, null, 3));
 
@@ -147,10 +149,6 @@ app.post('/outpost', function (req, res) {
 app.post('/location', function (req, res) {
 
     res.setHeader('Content-Type', 'application/json');
-
-    console.log('called location');
-
-    console.log(req.body);
 
     latitude = req.body.latitude;
     longitude = req.body.longitude;
