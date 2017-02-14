@@ -43,12 +43,16 @@ var SOCIAL = 2;
 var latitude;
 var longitude;
 
+var yelptoken;
+
 'use strict';
 
 const yelp = require('yelp-fusion');
 
-const token = yelp.accessToken('', '').then(response => {
-    console.log(response.jsonBody.access_token);
+const token = yelp.accessToken('lQtWce8qF1uBCGBgJSf72g', 'QL0CaFA8j8rC8zzCqxZw3Vzi8nzlR3fG2Ou3IPPS60KuD5Mw3hJVW8yQAahe26Fd').then(response => {
+    //    console.log(response.jsonBody.access_token);
+
+    yelptoken = response.jsonBody.access_token;
 
     const client = yelp.client(response.jsonBody.access_token);
 
@@ -78,10 +82,10 @@ var alchemycreds = require('./config/credentials.json');
 var Twitter = require('twitter');
 
 var twitterclient = new Twitter({
-    consumer_key: '',
-    consumer_secret: '',
-    access_token_key: '',
-    access_token_secret: ''
+    consumer_key: 'T8eAr9Frhc0oPi6VnagQOEOur',
+    consumer_secret: 'ASRuFAzn0b3VPmfo6mdGXYau4BSs9HOtdu2evHm5IcedK8qjat',
+    access_token_key: '15673818-vUX8sLguRCL0NVtn4AQXB6gXVDP8Ni4LUOwl6U2z6',
+    access_token_secret: 'sHJ1rQiukME7roJDmG333AT39rhn2AksnVxAbg3BGOeks'
 });
 
 var params = {
@@ -103,14 +107,38 @@ app.post('/outpost', function (req, res) {
 
     chatbot.sendMessage(req.body.text, req.body.context, function (response) {
 
-        console.log(response);
+        console.log(response.intents[0].intent);
 
-        res.send(JSON.stringify(response, null, 3));
+        if (response.intents[0].intent === 'cuisine') {
 
+            console.log('this is where to call Yelp');
+
+            const client = yelp.client(yelptoken);
+
+            client.search({
+
+                term: response.input.text,
+                latitude: latitude,
+                longitude: longitude
+
+            }).then(out => {
+
+
+                response.yelp = out.jsonBody;
+
+                console.log(response);
+
+
+                res.send(JSON.stringify(response, null, 3));
+
+            }).catch(e => {
+                console.log(e);
+            });
+
+        } else {
+            res.send(JSON.stringify(response, null, 3));
+        }
     });
-
-    // ensure user policies are loaded
-    //    if (!req.body.context || !req.body.context.system) {}
 });
 
 
@@ -127,8 +155,27 @@ app.post('/location', function (req, res) {
     latitude = req.body.latitude;
     longitude = req.body.longitude;
 
-    res.send(JSON.stringify(response, null, 3));
+    res.send(JSON.stringify({
+        outcome: "success"
+    }, null, 3));
 
+});
+
+
+app.get('/recommendations', function (req, res) {
+
+    const client = yelp.client(yelptoken);
+
+    client.search({
+        term: 'vegan',
+        //        location: 'ottawa',
+        latitude: latitude,
+        longitude: longitude
+    }).then(response => {
+        console.log(response.jsonBody);
+    }).catch(e => {
+        console.log(e);
+    });
 });
 
 

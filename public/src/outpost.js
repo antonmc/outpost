@@ -1,6 +1,10 @@
 var params = {}; // Object for parameters sent to the Watson Conversation service
 var context;
 
+var markers = [];
+
+var bounds = new google.maps.LatLngBounds();
+
 function initialize() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -8,6 +12,38 @@ function initialize() {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
+
+function createInfoWindow(marker, data) {
+
+    var contentString = '<div id="content">' +
+        '<h2 id="firstHeading" class="firstHeading">' + data.name + '</h2>' +
+        '<div id="bodyContent">' +
+        '<p><b>' + data.location.display_address[0] + '</b></p>' +
+        '<p>Rating: ' + data.rating + '</p>' +
+        '<p>Price: ' + data.price + '</p>' +
+        '<p><a target="_blank" href=" + data.url + ">website</a></p>' +
+        '</div>' +
+        '</div>';
+
+    marker.infowindow = new google.maps.InfoWindow({
+        content: contentString,
+        boxStyle: {
+            background: 'blue',
+            opacity: 0.75,
+            width: "280px"
+        }
+    });
+
+    marker.index = markers.length;
+
+    google.maps.event.addListener(marker, 'click', function () {
+        for (var m in markers) {
+            markers[m].infowindow.close();
+        }
+        this.infowindow.open(map, this);
+    });
+}
+
 
 function showPosition(position) {
     console.log("Latitude: " + position.coords.latitude +
@@ -82,14 +118,17 @@ function showPosition(position) {
 	];
 
 
+
     var mapOptions = {
         mapTypeControlOptions: {
             mapTypeIds: ['Styled']
         },
         center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-        zoom: 8,
+        zoom: 12,
+        scaleControl: true,
         mapTypeId: 'Styled'
     };
+
 
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
@@ -97,6 +136,26 @@ function showPosition(position) {
         name: 'Recommendations'
     });
     map.mapTypes.set('Styled', styledMapType);
+
+
+    var originStory = '#A85E76';
+
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillOpacity: 0.9,
+            fillColor: originStory,
+            strokeOpacity: 1,
+            strokeColor: originStory,
+            strokeWeight: 1.5,
+            scale: 8 //pixels
+        },
+        map: map
+    });
+
+
+    sendLocationToServer(position.coords.latitude, position.coords.longitude);
 }
 
 /**
@@ -136,6 +195,47 @@ function handleInput(e) {
     }
 }
 
+function sendLocationToServer(latitude, longitude) {
+
+    var location = {
+        latitude: latitude,
+        longitude: longitude
+    };
+
+    var xhr = new XMLHttpRequest();
+    var uri = '/location';
+
+    xhr.open('POST', uri, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function () {
+
+        if (xhr.status === 200 && xhr.responseText) {
+
+            var response = JSON.parse(xhr.responseText);
+
+            console.log(response);
+
+        } else {
+            console.error(xhr.statusText);
+        }
+    };
+
+    xhr.onerror = function () {
+        console.error('Network error trying to send message!');
+    };
+
+
+    xhr.send(JSON.stringify(location));
+}
+
+function compare(a, b) {
+    if (a.rating < b.rating)
+        return -1;
+    if (a.rating > b.rating)
+        return 1;
+    return 0;
+}
+
 function sendMessageToWatson(message) {
 
     // Set parameters for payload to Watson Conversation
@@ -160,11 +260,73 @@ function sendMessageToWatson(message) {
             text = response.output.text; // Only display the first response
             context = response.context; // Store the context for next round of questions
 
-            console.log('context: ' + context);
+            console.log('context: ' + JSON.stringify(response));
 
             console.log("Got response from Watson: ", text[0]);
 
+            if (response.yelp) {
+
+                /* handle map here */
+
+                console.log(response.yelp);
+
+                var byRating = response.yelp.businesses.sort(function (a, b) {
+                    return parseFloat(b.rating) - parseFloat(a.rating);
+                });
+
+                var byReview = response.yelp.businesses.sort(function (a, b) {
+                    return parseFloat(b.review_count) - parseFloat(a.review_count);
+                });
+
+
+
+                //                    var sorted = business.sort(compare);
+
+                console.log(response.yelp.businesses);
+
+
+                var highestRating = byRating[0].rating;
+
+                var element = byRating[0];
+
+                response.yelp.businesses.forEach(function (business) {
+
+                    console.log(business.name);
+
+                    var cardinalRed = '#CF413C';
+
+                    if (business.rating === highestRating) {
+                        if (business.review_count > element.review_count) {
+                            element = business;
+                        }
+                    }
+
+                    var position = new google.maps.LatLng(parseFloat(business.coordinates.latitude), parseFloat(business.coordinates.longitude));
+
+                    var marker = new google.maps.Marker({
+                        position: position,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            fillOpacity: 0.9,
+                            fillColor: cardinalRed,
+                            strokeOpacity: 1,
+                            strokeColor: cardinalRed,
+                            strokeWeight: 1.5,
+                            scale: 6 //pixels
+                        },
+                        map: map
+                    });
+
+                    createInfoWindow(marker, business);
+
+                    markers.push(marker);
+
+                })
+            }
+
             scoutBubble(text[0]);
+            scoutBubble('The highest rated restaurant with the most reviews is: ' + element.name);
+            scoutBubble('The most reviewed restaurant is: ' + byRating[0].name + ' with ' + byRating[0].review_count + ' reviews and a rating of ' + byRating[0].rating);
 
         } else {
             console.error('Server error for Conversation. Return status of: ', xhr.statusText);
