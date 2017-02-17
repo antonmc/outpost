@@ -36,7 +36,6 @@
                     <div class="slider round"></div>
                 </label>
                 <label>mindmap</label>
-
             </div>
         </div>
 
@@ -115,31 +114,30 @@
                             </div>
                             <div class="details">
                                 <div class="social">
-                                    <div class="detail-header">
+                                    <!-- div class="detail-header">
                                         <div class="detail-number">1</div>
                                         <div class="social-title">ADD SOCIAL FEEDS</div>
-                                    </div>
+                                    </div -->
                                     <!--                                    <div class="social-instructions">[ To add feeds tell Scout to 'add my twitter id' or 'add my pinterest id' ]</div>-->
                                     <div class="feeds">
                                         <div class="social-feed">
                                             <div class="feed-title">TWITTER</div>
                                             <div class="feed-id">@antonmc</div>
                                         </div>
-                                        <div class="social-feed">
+                                        <!-- div class="social-feed">
                                             <div class="feed-title">PINTEREST</div>
                                             <div class="feed-id">antonmc</div>
-                                        </div>
+                                        </div -->
                                     </div>
-
                                 </div>
                                 <div class="recommendations">
                                     <div class="detail-header">
                                         <div class="detail-number">2</div>
                                         <div class="social-title">VIEW RECOMMENDATION MIND MAP</div>
                                     </div>
-
-                                    <div class="recommendation-map"></div>
-
+                                    <div class="recommendation-container">
+                                        <div id="recommendation-map" class="recommendation-map"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -167,5 +165,8 @@
 </body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9UTKaObKmwVVc3uggMSJjOeWk_nxAdR4&sensor=true"></script>
 <script src="src/outpost.js"></script>
+<script src="src/sigma.min.js"></script>
+<script src="src/sigma.parsers.json.min.js"></script>
+<script src="src/sigma.layout.forceAtlas2.min.js"></script>
 
 </html>

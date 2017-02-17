@@ -3,6 +3,8 @@ var context;
 
 var markers = [];
 
+var s;
+
 var bounds = new google.maps.LatLngBounds();
 
 function initialize() {
@@ -11,6 +13,21 @@ function initialize() {
     } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
+
+    s = new sigma({
+        graph: testdata,
+        container: 'recommendation-map',
+        settings: {
+            defaultNodeColor: '#ec5148'
+        }
+    });
+
+    s.refresh();
+
+    s.startForceAtlas2();
+    setTimeout(function () {
+        s.stopForceAtlas2();
+    }, 2000)
 }
 
 function createInfoWindow(marker, data) {
@@ -117,8 +134,6 @@ function showPosition(position) {
 
 	];
 
-
-
     var mapOptions = {
         mapTypeControlOptions: {
             mapTypeIds: ['Styled']
@@ -136,7 +151,6 @@ function showPosition(position) {
         name: 'Recommendations'
     });
     map.mapTypes.set('Styled', styledMapType);
-
 
     var originStory = '#A85E76';
 
@@ -157,6 +171,167 @@ function showPosition(position) {
 
     sendLocationToServer(position.coords.latitude, position.coords.longitude);
 }
+
+var testdata = {
+    "nodes": [
+        {
+            "id": "root",
+            "label": "antonmc",
+            "x": 0,
+            "y": 0,
+            "size": 5,
+            "color": "#333333"
+    },
+        {
+            "id": "food",
+            "label": "food",
+            "x": 3,
+            "y": 0,
+            "size": 4
+    },
+        {
+            "id": "music",
+            "label": "music",
+            "x": -3,
+            "y": 0,
+            "size": 4
+        },
+        {
+            "id": "mexican",
+            "label": "mexican",
+            "x": 4,
+            "y": 0,
+            "size": 2
+        },
+        {
+            "id": "vegan",
+            "label": "vegan",
+            "x": 4,
+            "y": 0,
+            "size": 2
+        },
+        {
+            "id": "italian",
+            "label": "italian",
+            "x": 4,
+            "y": 0,
+            "size": 2
+        },
+        {
+            "id": "indian",
+            "label": "indian",
+            "x": 4,
+            "y": 0,
+            "size": 2
+        },
+        {
+            "id": "indie",
+            "label": "indie",
+            "x": -7,
+            "y": 5,
+            "size": 2
+        },
+        {
+            "id": "acoustic",
+            "label": "acoustic",
+            "x": -8,
+            "y": 8,
+            "size": 2
+        },
+        {
+            "id": "jazz",
+            "label": "jazz",
+            "x": -9,
+            "y": 9,
+            "size": 2
+        }, {
+            "id": "Mucho Burrito",
+            "label": "Mucho Burrito",
+            "x": -7,
+            "y": 5,
+            "size": 1
+        },
+        {
+            "id": "Green Door",
+            "label": "Green Door",
+            "x": -8,
+            "y": 8,
+            "size": 1
+        },
+        {
+            "id": "Pure Kitchen",
+            "label": "Pure Kitchen",
+            "x": -9,
+            "y": 9,
+            "size": 1
+        }
+
+  ],
+    "edges": [
+        {
+            "id": "e0",
+            "source": "root",
+            "target": "food"
+    },
+        {
+            "id": "e1",
+            "source": "root",
+            "target": "music"
+    },
+        {
+            "id": "e2",
+            "source": "food",
+            "target": "mexican"
+    },
+        {
+            "id": "e3",
+            "source": "food",
+            "target": "vegan"
+    },
+        {
+            "id": "e4",
+            "source": "food",
+            "target": "italian"
+    },
+        {
+            "id": "e5",
+            "source": "food",
+            "target": "indian"
+    },
+        {
+            "id": "e6",
+            "source": "music",
+            "target": "indie"
+    },
+        {
+            "id": "e7",
+            "source": "music",
+            "target": "acoustic"
+    },
+        {
+            "id": "e8",
+            "source": "music",
+            "target": "jazz"
+    },
+        {
+            "id": "e9",
+            "source": "vegan",
+            "target": "Pure Kitchen"
+    },
+        {
+            "id": "e10",
+            "source": "vegan",
+            "target": "Green Door"
+    },
+        {
+            "id": "e11",
+            "source": "mexican",
+            "target": "Mucho Burrito"
+    }
+  ]
+}
+
+
 
 /**
  * @summary Enter Keyboard Event.
@@ -328,13 +503,13 @@ function sendMessageToWatson(message) {
                 scoutBubble('The most reviewed restaurant is: ' + byRating[0].name + '.');
                 scoutBubble('It is also the highest rated, with ' + byRating[0].review_count + ' reviews and a rating of ' + byRating[0].rating);
 
-                for (var f = 0; f < markers.length; markers++) {
-
-                    if (markers[f].name === byRating[0].name) {
-                        markers[f].infowindow.open(map);
-                    }
-
-                }
+                //                for (var f = 0; f < markers.length; markers++) {
+                //
+                //                    if (markers[f].name === byRating[0].name) {
+                //                        markers[f].infowindow.open(map);
+                //                    }
+                //
+                //                }
 
 
             }

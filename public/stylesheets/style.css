@@ -200,6 +200,7 @@ a {
 .divide {
     display: flex;
     flex-direction: row;
+    width: 800px;
     /*        margin-top: 40px;*/
 }
 
@@ -207,7 +208,7 @@ a {
 /* - - - - - - - - - - */
 
 .concepts {
-    width: 426px;
+    width: 385px;
     margin-right: 30px;
     border-radius: 4px;
 }
@@ -216,7 +217,7 @@ a {
 /* - - - - - - - - - - */
 
 .conversation {
-    width: 300px;
+    width: 345px;
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -229,7 +230,7 @@ a {
 }
 
 .mindmap {
-    width: 300px;
+    width: 345px;
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -260,7 +261,7 @@ a {
 .conversation-description {
     display: flex;
     flex-direction: column;
-    width: 260px;
+    width: 290px;
     justify-content: center;
 }
 
@@ -290,7 +291,7 @@ a {
     flex-direction: column;
     border: 1px dashed #888;
     height: 410px;
-    width: 300px;
+    width: 343px;
     border-radius: 4px;
     margin-top: 20px;
     background: white;
@@ -303,7 +304,7 @@ a {
     display: flex;
     border: 1px solid #888;
     height: 70px;
-    width: 280px;
+    width: 323px;
     border-radius: 4px;
     margin-top: 20px;
     padding: 5px;
@@ -380,15 +381,24 @@ a {
     width: 100%
 }
 
-.recommendation-map {
-    height: 340px;
+.recommendation-container {
+    height: 364px;
     display: flex;
     flex-direction: column;
-    padding-left: 30px;
     border: 1px dashed #A5C8CF;
     /* width: 100%; */
     border-radius: 4px;
     background: white;
+    padding: 10px;
+}
+
+.recommendation-map {
+    display: flex;
+    flex-direction: column;
+    /* width: 100%; */
+    border-radius: 4px;
+    background: white;
+    height: 300px;
 }
 
 .detail-header {
