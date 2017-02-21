@@ -185,9 +185,11 @@ function addRecommendation(data) {
         '<div class = "recommendation-name">' + data.name + '</div>' +
         '<div class = "recommendation-address">' + data.location.display_address[0] + '</div>' +
         '<div class = "recommendation-meta">' +
-        '<div class = "recommendation-score">Rating: ' + data.rating + '</div>' +
         '<div class = "recommendation-reviews">Reviews: ' + data.review_count + '</div>' +
         '</div>' +
+        '</div>' +
+        '<div class="recommendation-image">' +
+        '<div class = "recommendation-pic">' + data.rating + '</div>' +
         '</div>' +
         '</div>'
 
@@ -205,7 +207,7 @@ var testdata = {
             "x": 0,
             "y": 0,
             "size": 5,
-            color: "#A5C8CF"
+            color: "#84a0a5"
     },
         {
             "id": "food",
@@ -213,7 +215,7 @@ var testdata = {
             "x": 3,
             "y": 0,
             "size": 4,
-            color: "#A5C8CF"
+            color: "#84a0a5"
     },
         {
             "id": "music",
@@ -221,7 +223,7 @@ var testdata = {
             "x": -3,
             "y": 0,
             "size": 4,
-            color: "#A5C8CF"
+            color: "#84a0a5"
         },
         {
             "id": "mexican",
@@ -229,7 +231,7 @@ var testdata = {
             "x": 4,
             "y": 0,
             "size": 2,
-            color: "#A5C8CF"
+            color: "#84a0a5"
         },
         {
             "id": "vegan",
@@ -237,7 +239,7 @@ var testdata = {
             "x": 4,
             "y": 0,
             "size": 2,
-            color: "#A5C8CF"
+            color: "#84a0a5"
         },
         {
             "id": "italian",
@@ -245,7 +247,7 @@ var testdata = {
             "x": 4,
             "y": 0,
             "size": 2,
-            color: "#A5C8CF"
+            color: "#84a0a5"
         },
         {
             "id": "indian",
@@ -253,7 +255,7 @@ var testdata = {
             "x": 4,
             "y": 0,
             "size": 2,
-            color: "#A5C8CF"
+            color: "#84a0a5"
         },
         {
             "id": "indie",
@@ -261,7 +263,7 @@ var testdata = {
             "x": -7,
             "y": 5,
             "size": 2,
-            color: "#A5C8CF"
+            color: "#84a0a5"
         },
         {
             "id": "acoustic",
@@ -269,7 +271,7 @@ var testdata = {
             "x": -8,
             "y": 8,
             "size": 2,
-            color: "#A5C8CF"
+            color: "#84a0a5"
         },
         {
             "id": "jazz",
@@ -277,14 +279,14 @@ var testdata = {
             "x": -9,
             "y": 9,
             "size": 2,
-            color: "#A5C8CF"
+            color: "#84a0a5"
         }, {
             "id": "Mucho Burrito",
             "label": "Mucho Burrito",
             "x": -7,
             "y": 5,
             "size": 1,
-            color: "#A5C8CF"
+            color: "#84a0a5"
         },
         {
             "id": "Green Door",
@@ -292,7 +294,7 @@ var testdata = {
             "x": -8,
             "y": 8,
             "size": 1,
-            color: "#A5C8CF"
+            color: "#84a0a5"
         },
         {
             "id": "Pure Kitchen",
@@ -300,7 +302,7 @@ var testdata = {
             "x": -9,
             "y": 9,
             "size": 1,
-            color: "#A5C8CF"
+            color: "#84a0a5 "
         }
 
   ],
