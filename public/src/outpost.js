@@ -172,6 +172,31 @@ function showPosition(position) {
     sendLocationToServer(position.coords.latitude, position.coords.longitude);
 }
 
+
+function addRecommendation(data) {
+
+    var media = document.createElement('div');
+    media.className = 'recommendation-media';
+    media.innerHTML = '<div class="recommendation-split">' +
+        '<div class="recommendation-image">' +
+        '<img class = "recommendation-pic" src =' + data.image_url + '>' +
+        '</div>' +
+        '<div class = "recommendation-info">' +
+        '<div class = "recommendation-name">' + data.name + '</div>' +
+        '<div class = "recommendation-address">' + data.location.display_address[0] + '</div>' +
+        '<div class = "recommendation-meta">' +
+        '<div class = "recommendation-score">Rating: ' + data.rating + '</div>' +
+        '<div class = "recommendation-reviews">Reviews: ' + data.review_count + '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+
+    var anchor = document.getElementById('list');
+    list.appendChild(media);
+}
+
+
+
 var testdata = {
     "nodes": [
         {
@@ -180,90 +205,102 @@ var testdata = {
             "x": 0,
             "y": 0,
             "size": 5,
-            "color": "#333333"
+            color: "#A5C8CF"
     },
         {
             "id": "food",
             "label": "food",
             "x": 3,
             "y": 0,
-            "size": 4
+            "size": 4,
+            color: "#A5C8CF"
     },
         {
             "id": "music",
             "label": "music",
             "x": -3,
             "y": 0,
-            "size": 4
+            "size": 4,
+            color: "#A5C8CF"
         },
         {
             "id": "mexican",
             "label": "mexican",
             "x": 4,
             "y": 0,
-            "size": 2
+            "size": 2,
+            color: "#A5C8CF"
         },
         {
             "id": "vegan",
             "label": "vegan",
             "x": 4,
             "y": 0,
-            "size": 2
+            "size": 2,
+            color: "#A5C8CF"
         },
         {
             "id": "italian",
             "label": "italian",
             "x": 4,
             "y": 0,
-            "size": 2
+            "size": 2,
+            color: "#A5C8CF"
         },
         {
             "id": "indian",
             "label": "indian",
             "x": 4,
             "y": 0,
-            "size": 2
+            "size": 2,
+            color: "#A5C8CF"
         },
         {
             "id": "indie",
             "label": "indie",
             "x": -7,
             "y": 5,
-            "size": 2
+            "size": 2,
+            color: "#A5C8CF"
         },
         {
             "id": "acoustic",
             "label": "acoustic",
             "x": -8,
             "y": 8,
-            "size": 2
+            "size": 2,
+            color: "#A5C8CF"
         },
         {
             "id": "jazz",
             "label": "jazz",
             "x": -9,
             "y": 9,
-            "size": 2
+            "size": 2,
+            color: "#A5C8CF"
         }, {
             "id": "Mucho Burrito",
             "label": "Mucho Burrito",
             "x": -7,
             "y": 5,
-            "size": 1
+            "size": 1,
+            color: "#A5C8CF"
         },
         {
             "id": "Green Door",
             "label": "Green Door",
             "x": -8,
             "y": 8,
-            "size": 1
+            "size": 1,
+            color: "#A5C8CF"
         },
         {
             "id": "Pure Kitchen",
             "label": "Pure Kitchen",
             "x": -9,
             "y": 9,
-            "size": 1
+            "size": 1,
+            color: "#A5C8CF"
         }
 
   ],
@@ -487,6 +524,8 @@ function sendMessageToWatson(message) {
                     createInfoWindow(marker, business);
 
                     markers.push(marker);
+
+                    addRecommendation(business);
                 })
             }
 

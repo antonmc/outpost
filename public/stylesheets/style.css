@@ -276,6 +276,14 @@ a {
     line-height: 20px;
 }
 
+.list {
+    height: 204px;
+    border: 1px solid #dbe9eb;
+    border-radius: 4px;
+    margin-top: 30px;
+    overflow-y: scroll;
+}
+
 .conversation-title {
     display: flex;
     color: #333;
@@ -743,4 +751,62 @@ input:checked + .slider:before {
 
 .gm-style-mtc {
     color: blue !important;
+}
+
+
+/* - - - - - - - - - - - */
+
+.recommendation-media {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    height: 70px;
+    border-bottom: 1px solid #dbe9eb;
+}
+
+.recommendation-split {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.recommendation-image {
+    height: 70px;
+}
+
+.recommendation-pic {
+    height: 50px;
+    margin: 10px;
+    border-radius: 4px;
+    width: 50px;
+}
+
+.recommendation-info {
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+    line-height: 16px;
+}
+
+.recommendation-meta {
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+}
+
+.recommendation-name {
+    font-size: 12px;
+}
+
+.recommendation-score {
+    width: 100px;
+}
+
+.recommendation-reviews {
+    width: 100px;
+}
+
+.recommendation-address {
+    font-size: 12px;
 }
