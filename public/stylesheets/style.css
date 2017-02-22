@@ -792,6 +792,14 @@ input:checked + .slider:before {
     border-bottom: 1px solid #dbe9eb;
 }
 
+.recommendation-media:hover {
+    background: #f2f6ec;
+}
+
+.recommendation-media::selection {
+    background: #f6f9fa;
+}
+
 .recommendation-split {
     display: flex;
     flex-direction: row;

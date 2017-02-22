@@ -545,26 +545,26 @@ function sendMessageToWatson(message) {
 
             scoutBubble(text[0]);
 
-            if (element.name !== byRating[0].name) {
+            if (element.name != undefined) {
 
-                scoutBubble('Well, the highest rated restaurant with the most reviews is: ' + element.name);
+                if (element.name !== byRating[0].name) {
 
-                scoutBubble('The most reviewed restaurant is: ' + byRating[0].name + ' with ' + byRating[0].review_count + ' reviews and a rating of ' + byRating[0].rating);
+                    scoutBubble('Well, the highest rated restaurant with the most reviews is: ' + element.name);
 
-            } else {
+                    scoutBubble('The most reviewed restaurant is: ' + byRating[0].name + ' with ' + byRating[0].review_count + ' reviews and a rating of ' + byRating[0].rating);
 
-                scoutBubble('The most reviewed restaurant is: ' + byRating[0].name + '.');
-                scoutBubble('It is also the highest rated, with ' + byRating[0].review_count + ' reviews and a rating of ' + byRating[0].rating);
+                } else {
 
-                //                for (var f = 0; f < markers.length; markers++) {
-                //
-                //                    if (markers[f].name === byRating[0].name) {
-                //                        markers[f].infowindow.open(map);
-                //                    }
-                //
-                //                }
+                    scoutBubble('The most reviewed restaurant is: ' + byRating[0].name + '.');
+                    scoutBubble('It is also the highest rated, with ' + byRating[0].review_count + ' reviews and a rating of ' + byRating[0].rating);
 
+                    for (var f = 0; f < markers.length; markers++) {
 
+                        if (markers[f].name === byRating[0].name) {
+                            markers[f].infowindow.open(map, markers[f]);
+                        }
+                    }
+                }
             }
 
         } else {
