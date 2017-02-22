@@ -38,7 +38,7 @@ function createInfoWindow(marker, data) {
         '<p><b>' + data.location.display_address[0] + '</b></p>' +
         '<p>Rating: ' + data.rating + '</p>' +
         '<p>Price: ' + data.price + '</p>' +
-        '<p><a target="_blank" href=" + data.url + ">website</a></p>' +
+        '<p><a target="_blank" href="' + data.url + '">website</a></p>' +
         '</div>' +
         '</div>';
 
@@ -139,7 +139,7 @@ function showPosition(position) {
             mapTypeIds: ['Styled']
         },
         center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-        zoom: 12,
+        zoom: 11,
         scaleControl: true,
         mapTypeId: 'Styled'
     };
@@ -173,7 +173,7 @@ function showPosition(position) {
 }
 
 
-function addRecommendation(data) {
+function addRecommendation(marker, data) {
 
     var media = document.createElement('div');
     media.className = 'recommendation-media';
@@ -195,6 +195,14 @@ function addRecommendation(data) {
 
     var anchor = document.getElementById('list');
     list.appendChild(media);
+
+    media.onclick = function () {
+        for (var m in markers) {
+            markers[m].infowindow.close();
+        }
+
+        marker.infowindow.open(map, marker);
+    }
 }
 
 
@@ -496,6 +504,9 @@ function sendMessageToWatson(message) {
 
                 var element = byRating[0];
 
+                var listheader = document.getElementById('list-header');
+                listheader.innerHTML = 'RECOMMENDATION LIST : ' + response.input.text;
+
                 response.yelp.businesses.forEach(function (business) {
 
                     var cardinalRed = '#CF413C';
@@ -520,14 +531,15 @@ function sendMessageToWatson(message) {
                             strokeWeight: 1.5,
                             scale: 6 //pixels
                         },
-                        map: map
+                        map: map,
+                        id: business.name
                     });
 
                     createInfoWindow(marker, business);
 
                     markers.push(marker);
 
-                    addRecommendation(business);
+                    addRecommendation(marker, business);
                 })
             }
 
