@@ -71,19 +71,19 @@ const token = yelp.accessToken('lQtWce8qF1uBCGBgJSf72g', 'QL0CaFA8j8rC8zzCqxZw3V
 });
 
 
-var PDK = require('node-pinterest');
-var pinterest = PDK.init('4867289310860159927');
-
-//pinterest.api('antonmc').then(console.log); 
-
-var options = {
-    qs: {
-        fields: "antonmc,Anton",
-        limit: 10
-    }
-};
-
-pinterest.api('antonmc/pins', options).then(console.log);
+//var PDK = require('node - pinterest ');
+//var pinterest = PDK.init('AXEjA8iP2yLXX6grRfiunleNylq5FKZVAxy3wWlDz9DhgEBDvwAAAAA');
+//
+////pinterest.api('antonmc').then(console.log); 
+//
+//var options = {
+//    qs: {
+//        fields: "antonmc,Anton",
+//        limit: 10
+//    }
+//};
+//
+//pinterest.api('antonmc/pins', options).then(console.log);
 
 /* - - - - - - - - - - */
 
@@ -99,7 +99,7 @@ var twitterclient = new Twitter({
 });
 
 var params = {
-    screen_name: 'antonmc',
+    screen_name: 'johnsmithwords',
     count: 1000
 };
 
@@ -202,56 +202,65 @@ twitterclient.get('statuses/user_timeline', params, function (error, tweets, res
     var concepts = '';
     var entities = '';
 
-    //    alchemy_language.keywords(parameters, function (err, response) {
-    //
-    //        if (err) {
-    //            console.log('error:', err);
-    //        } else {
-    //
-    //            response.keywords.forEach(function (concept) {
-    //                keywords = keywords + concept.text + '\n';
-    //            });
-    //
-    //        }
-    //
-    //        console.log(keywords);
-    //
-    //    });
-    //
-    //
-    //    alchemy_language.concepts(parameters, function (err, response) {
-    //
-    //        if (err) {
-    //            console.log('error:', err);
-    //        } else {
-    //
-    //            response.concepts.forEach(function (concept) {
-    //                concepts = concepts + concept.text + '\n';
-    //            });
-    //
-    //        }
-    //
-    //        console.log(concepts);
-    //
-    //    });
-    //
-    //    alchemy_language.entities(parameters, function (err, response) {
-    //
-    //        if (err) {
-    //            console.log('error:', err);
-    //        } else {
-    //
-    //            if (response.concepts) {
-    //                response.concepts.forEach(function (concept) {
-    //                    entities = entities + concept.text + '\n';
-    //                });
-    //            }
-    //        }
-    //
-    //        console.log(concepts);
-    //
-    //    });
+    alchemy_language.keywords(parameters, function (err, response) {
 
+        if (err) {
+            console.log('error:', err);
+        } else {
+
+            response.keywords.forEach(function (concept) {
+                keywords = keywords + concept.text + '\n';
+            });
+
+        }
+
+        console.log('keywords');
+        console.log('--------');
+
+        console.log(keywords);
+
+    });
+
+
+    alchemy_language.concepts(parameters, function (err, response) {
+
+        if (err) {
+            console.log('error:', err);
+        } else {
+
+            response.concepts.forEach(function (concept) {
+                concepts = concepts + concept.text + '\n';
+            });
+
+        }
+
+        console.log('concepts');
+        console.log('--------');
+
+        console.log(concepts);
+
+    });
+
+    alchemy_language.entities(parameters, function (err, response) {
+
+        if (err) {
+            console.log('error:', err);
+        } else {
+
+            if (response.entities) {
+                response.entities.forEach(function (entity) {
+                    entities = entities + entity.text + '\n';
+                });
+            }
+        }
+
+
+        console.log('entities');
+        console.log('--------');
+
+        console.log(entities);
+
+    });
 });
 
 // start server on the specified port and binding host

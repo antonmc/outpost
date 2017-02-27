@@ -11,6 +11,7 @@ html {
     font-family: "Varela Round", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     color: #333333;
     -webkit-font-smoothing: antialiased;
+    user-select: none;
 }
 
 p {
