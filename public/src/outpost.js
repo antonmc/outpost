@@ -613,3 +613,39 @@ function flip(event) {
     var flipcontainer = document.getElementById('flipper');
     flipcontainer.classList.toggle('rotator');
 }
+
+function sendSocialId(id) {
+
+    // Set parameters for payload to Watson Conversation
+
+    params.socialid = id; // User defined text to be sent to service
+
+    if (context) {
+        params.context = context;
+    }
+
+    var xhr = new XMLHttpRequest();
+    var uri = '/social';
+
+    xhr.open('POST', uri, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function () {}
+
+    xhr.onerror = function () {
+        console.error('Network error trying to send message!');
+    };
+
+    console.log(JSON.stringify(params));
+
+    xhr.send(JSON.stringify(params));
+
+}
+
+function submit(event) {
+    console.log('submit');
+    var twitterid = document.getElementById('twitterid');
+
+    console.log(twitterid.value);
+
+    sendSocialId(twitterid.value);
+}

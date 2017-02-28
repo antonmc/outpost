@@ -60,7 +60,7 @@ p {
 
 .logo {
     margin: 14px;
-    height: 54px;
+    height: 60px;
     margin-left: -14px;
 }
 
@@ -358,7 +358,6 @@ a {
     font-weight: bold;
     text-transform: uppercase;
     line-height: 20px;
-    margin-bottom: 10px;
 }
 
 .social-instructions {
@@ -370,6 +369,15 @@ a {
 .feeds {
     display: flex;
     flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+    background: #fbfcf9;
+    border-radius: 4px;
+    padding: 10px;
 }
 
 .feed-title {
@@ -418,13 +426,13 @@ a {
 }
 
 .recommendation-container {
-    height: 364px;
+    height: 390px;
     display: flex;
     flex-direction: column;
-    border: 1px dashed #A5C8CF;
+    /*    border: 1px dashed #A5C8CF;*/
     /* width: 100%; */
     border-radius: 4px;
-    background: white;
+    background: #fbfcf9;
     padding: 10px;
 }
 
@@ -440,9 +448,14 @@ a {
 .detail-header {
     display: flex;
     flex-direction: row;
+    align-items: center;
     align-content: center;
-    padding-top: 15px;
-    border-top: 1px dashed #888;
+    /* padding-top: 15px; */
+    background: #fbfcf9;
+    /* border-radius: 4px; */
+    padding: 10px;
+    padding-bottom: 0;
+    /* margin-bottom: 10px; */
 }
 
 .detail-number {
@@ -858,4 +871,31 @@ input:checked + .slider:before {
 
 .recommendation-address {
     font-size: 12px;
+}
+
+.social-entry {
+    border: none;
+    margin-bottom: 10px;
+    outline: none;
+    line-height: 30px;
+    border-bottom: 1px dashed #333;
+    background: none;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.social-button {
+    background: #A5C8CF;
+    border: none;
+    box-shadow: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 5px;
+    padding: 5px;
+    outline: none;
+}
+
+.social-button:hover {
+    background: #84a546;
 }

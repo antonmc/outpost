@@ -107,6 +107,26 @@ var body = '';
 
 var chatbot = require('./bot.js');
 
+app.post('/social', function (req, res) {
+
+    res.setHeader('Content-Type', 'application/json');
+
+    console.log('called social');
+
+    var socialid = req.body.socialid;
+
+    console.log(socialid);
+
+    var outcome = {
+        "outcome": "success"
+    };
+
+    analyze(socialid);
+
+    res.send(JSON.stringify(outcome, null, 3));
+})
+
+
 app.post('/outpost', function (req, res) {
 
     res.setHeader('Content-Type', 'application/json');
@@ -176,6 +196,101 @@ app.get('/recommendations', function (req, res) {
     });
 });
 
+
+function analyze(id) {
+
+    var person = {
+        screen_name: id,
+        count: 1000
+    };
+
+    twitterclient.get('statuses/user_timeline', person, function (error, tweets, response) {
+        if (!error) {
+            //        console.log(tweets.length);//
+            //        console.log(tweets[0].text);
+        }
+
+        tweets.forEach(function (tweet) {
+
+            var cleaned = tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
+
+            body = body + cleaned;
+        })
+
+        //    console.log(body);
+
+        var parameters = {
+            text: body,
+            knowledgeGraph: 1
+        };
+
+        var keywords = '';
+        var concepts = '';
+        var entities = '';
+
+        alchemy_language.keywords(parameters, function (err, response) {
+
+            if (err) {
+                console.log('error:', err);
+            } else {
+
+                response.keywords.forEach(function (concept) {
+                    keywords = keywords + concept.text + '\n';
+                });
+
+            }
+
+            console.log('keywords');
+            console.log('--------');
+
+            console.log(keywords);
+
+        });
+
+
+        alchemy_language.concepts(parameters, function (err, response) {
+
+            if (err) {
+                console.log('error:', err);
+            } else {
+
+                response.concepts.forEach(function (concept) {
+                    concepts = concepts + concept.text + '\n';
+                });
+
+            }
+
+            console.log('concepts');
+            console.log('--------');
+
+            console.log(concepts);
+
+        });
+
+        alchemy_language.entities(parameters, function (err, response) {
+
+            if (err) {
+                console.log('error:', err);
+            } else {
+
+                if (response.entities) {
+                    response.entities.forEach(function (entity) {
+                        entities = entities + entity.text + '\n';
+                    });
+                }
+            }
+
+
+            console.log('entities');
+            console.log('--------');
+
+            console.log(entities);
+
+        });
+    });
+
+
+}
 
 
 twitterclient.get('statuses/user_timeline', params, function (error, tweets, response) {

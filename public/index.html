@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/style.css">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 </head>
 
 <body onload="initialize()">
@@ -138,10 +139,14 @@
                                     </div -->
                                     <!--                                    <div class="social-instructions">[ To add feeds tell Scout to 'add my twitter id' or 'add my pinterest id' ]</div>-->
                                     <div class="feeds">
-                                        <div class="social-feed">
+                                        <!-- div class="social-feed">
                                             <div class="feed-title">TWITTER</div>
                                             <div class="feed-id">@antonmc</div>
-                                        </div>
+                                        </div -->
+                                        <label>Twitter Name: </label>
+                                        <input id="twitterid" class="social-entry" type="text" name="last_name" value="" maxlength="100" />
+                                        <input id="submit" class="social-button" type="submit" value="Submit" onclick="submit()" />
+                                        </form>
                                         <!-- div class="social-feed">
                                             <div class="feed-title">PINTEREST</div>
                                             <div class="feed-id">antonmc</div>
