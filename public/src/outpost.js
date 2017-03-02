@@ -13,21 +13,6 @@ function initialize() {
     } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
-
-    s = new sigma({
-        graph: testdata,
-        container: 'recommendation-map',
-        settings: {
-            defaultNodeColor: '#ec5148'
-        }
-    });
-
-    s.refresh();
-
-    s.startForceAtlas2();
-    setTimeout(function () {
-        s.stopForceAtlas2();
-    }, 2000)
 }
 
 function createInfoWindow(marker, data) {
@@ -207,176 +192,7 @@ function addRecommendation(marker, data) {
 
 
 
-var testdata = {
-    "nodes": [
-        {
-            "id": "root",
-            "label": "antonmc",
-            "x": 0,
-            "y": 0,
-            "size": 5,
-            color: "#84a0a5"
-    },
-        {
-            "id": "food",
-            "label": "food",
-            "x": 3,
-            "y": 0,
-            "size": 4,
-            color: "#84a0a5"
-    },
-        {
-            "id": "music",
-            "label": "music",
-            "x": -3,
-            "y": 0,
-            "size": 4,
-            color: "#84a0a5"
-        },
-        {
-            "id": "mexican",
-            "label": "mexican",
-            "x": 4,
-            "y": 0,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "vegan",
-            "label": "vegan",
-            "x": 4,
-            "y": 0,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "italian",
-            "label": "italian",
-            "x": 4,
-            "y": 0,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "indian",
-            "label": "indian",
-            "x": 4,
-            "y": 0,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "indie",
-            "label": "indie",
-            "x": -7,
-            "y": 5,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "acoustic",
-            "label": "acoustic",
-            "x": -8,
-            "y": 8,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "jazz",
-            "label": "jazz",
-            "x": -9,
-            "y": 9,
-            "size": 2,
-            color: "#84a0a5"
-        }, {
-            "id": "Mucho Burrito",
-            "label": "Mucho Burrito",
-            "x": -7,
-            "y": 5,
-            "size": 1,
-            color: "#84a0a5"
-        },
-        {
-            "id": "Green Door",
-            "label": "Green Door",
-            "x": -8,
-            "y": 8,
-            "size": 1,
-            color: "#84a0a5"
-        },
-        {
-            "id": "Pure Kitchen",
-            "label": "Pure Kitchen",
-            "x": -9,
-            "y": 9,
-            "size": 1,
-            color: "#84a0a5 "
-        }
 
-  ],
-    "edges": [
-        {
-            "id": "e0",
-            "source": "root",
-            "target": "food"
-    },
-        {
-            "id": "e1",
-            "source": "root",
-            "target": "music"
-    },
-        {
-            "id": "e2",
-            "source": "food",
-            "target": "mexican"
-    },
-        {
-            "id": "e3",
-            "source": "food",
-            "target": "vegan"
-    },
-        {
-            "id": "e4",
-            "source": "food",
-            "target": "italian"
-    },
-        {
-            "id": "e5",
-            "source": "food",
-            "target": "indian"
-    },
-        {
-            "id": "e6",
-            "source": "music",
-            "target": "indie"
-    },
-        {
-            "id": "e7",
-            "source": "music",
-            "target": "acoustic"
-    },
-        {
-            "id": "e8",
-            "source": "music",
-            "target": "jazz"
-    },
-        {
-            "id": "e9",
-            "source": "vegan",
-            "target": "Pure Kitchen"
-    },
-        {
-            "id": "e10",
-            "source": "vegan",
-            "target": "Green Door"
-    },
-        {
-            "id": "e11",
-            "source": "mexican",
-            "target": "Mucho Burrito"
-    }
-  ]
-}
 
 
 
@@ -629,7 +445,30 @@ function sendSocialId(id) {
 
     xhr.open('POST', uri, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function () {}
+    xhr.onload = function () {
+
+        if (xhr.status === 200 && xhr.responseText) {
+
+            var response = JSON.parse(xhr.responseText);
+
+            console.log(response);
+
+            s = new sigma({
+                graph: response.result,
+                container: 'recommendation-map',
+                settings: {
+                    defaultNodeColor: '#ec5148'
+                }
+            });
+
+            s.refresh();
+
+            s.startForceAtlas2();
+            setTimeout(function () {
+                s.stopForceAtlas2();
+            }, 1000)
+        }
+    }
 
     xhr.onerror = function () {
         console.error('Network error trying to send message!');
@@ -648,4 +487,253 @@ function submit(event) {
     console.log(twitterid.value);
 
     sendSocialId(twitterid.value);
+}
+
+
+
+var td = {
+    nodes: [{
+            id: "root",
+            label: "johnsmithwords",
+            x: 0,
+            y: 0,
+            size: 5,
+            color: "#84a0a5"
+        },
+        {
+            id: 'food',
+            label: 'food',
+            x: 3,
+            y: 0,
+            size: 5,
+            color: '#84a0a5'
+        },
+        {
+            id: 'seafood',
+            label: 'seafood',
+            x: 8,
+            "y": 2,
+            size: 4,
+            color: '#84a0a5'
+        },
+        {
+            id: 'italian',
+            label: 'italian',
+            x: 4,
+            y: 0,
+            size: 4,
+            color: '#84a0a5'
+        },
+        {
+            id: 'mexican',
+            label: 'mexican',
+            x: 9,
+            y: 4,
+            size: 4,
+            color: '#84a0a5'
+        },
+        {
+            id: 'comfort',
+            label: 'comfort',
+            x: 10,
+            y: 3,
+            size: 4,
+            color: '#84a0a5'
+        }],
+    edges: [{
+            id: 'e0',
+            source: 'root',
+            target: 'food'
+        },
+        {
+            id: 'e1',
+            source: 'food',
+            target: 'seafood'
+        },
+        {
+            id: 'e2',
+            source: 'food',
+            target: 'italian'
+        },
+        {
+            id: 'e3',
+            source: 'food',
+            target: 'mexican'
+        },
+        {
+            id: 'e4',
+            source: 'food',
+            target: 'comfort'
+        }]
+};
+
+var testdata = {
+    "nodes": [
+        {
+            "id": "root",
+            "label": "antonmc",
+            "x": 0,
+            "y": 0,
+            "size": 5,
+            color: "#84a0a5"
+    },
+        {
+            "id": "food",
+            "label": "food",
+            "x": 3,
+            "y": 0,
+            "size": 4,
+            color: "#84a0a5"
+    },
+        {
+            "id": "music",
+            "label": "music",
+            "x": -3,
+            "y": 0,
+            "size": 4,
+            color: "#84a0a5"
+        },
+        {
+            "id": "mexican",
+            "label": "mexican",
+            "x": 4,
+            "y": 0,
+            "size": 2,
+            color: "#84a0a5"
+        },
+        {
+            "id": "vegan",
+            "label": "vegan",
+            "x": 4,
+            "y": 0,
+            "size": 2,
+            color: "#84a0a5"
+        },
+        {
+            "id": "italian",
+            "label": "italian",
+            "x": 4,
+            "y": 0,
+            "size": 2,
+            color: "#84a0a5"
+        },
+        {
+            "id": "indian",
+            "label": "indian",
+            "x": 4,
+            "y": 0,
+            "size": 2,
+            color: "#84a0a5"
+        },
+        {
+            "id": "indie",
+            "label": "indie",
+            "x": -7,
+            "y": 5,
+            "size": 2,
+            color: "#84a0a5"
+        },
+        {
+            "id": "acoustic",
+            "label": "acoustic",
+            "x": -8,
+            "y": 8,
+            "size": 2,
+            color: "#84a0a5"
+        },
+        {
+            "id": "jazz",
+            "label": "jazz",
+            "x": -9,
+            "y": 9,
+            "size": 2,
+            color: "#84a0a5"
+        }, {
+            "id": "Mucho Burrito",
+            "label": "Mucho Burrito",
+            "x": -7,
+            "y": 5,
+            "size": 1,
+            color: "#84a0a5"
+        },
+        {
+            "id": "Green Door",
+            "label": "Green Door",
+            "x": -8,
+            "y": 8,
+            "size": 1,
+            color: "#84a0a5"
+        },
+        {
+            "id": "Pure Kitchen",
+            "label": "Pure Kitchen",
+            "x": -9,
+            "y": 9,
+            "size": 1,
+            color: "#84a0a5 "
+        }
+
+  ],
+    "edges": [
+        {
+            "id": "e0",
+            "source": "root",
+            "target": "food"
+    },
+        {
+            "id": "e1",
+            "source": "root",
+            "target": "music"
+    },
+        {
+            "id": "e2",
+            "source": "food",
+            "target": "mexican"
+    },
+        {
+            "id": "e3",
+            "source": "food",
+            "target": "vegan"
+    },
+        {
+            "id": "e4",
+            "source": "food",
+            "target": "italian"
+    },
+        {
+            "id": "e5",
+            "source": "food",
+            "target": "indian"
+    },
+        {
+            "id": "e6",
+            "source": "music",
+            "target": "indie"
+    },
+        {
+            "id": "e7",
+            "source": "music",
+            "target": "acoustic"
+    },
+        {
+            "id": "e8",
+            "source": "music",
+            "target": "jazz"
+    },
+        {
+            "id": "e9",
+            "source": "vegan",
+            "target": "Pure Kitchen"
+    },
+        {
+            "id": "e10",
+            "source": "vegan",
+            "target": "Green Door"
+    },
+        {
+            "id": "e11",
+            "source": "mexican",
+            "target": "Mucho Burrito"
+    }
+  ]
 }

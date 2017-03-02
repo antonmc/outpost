@@ -136,9 +136,11 @@ app.post('/social', function (req, res) {
         "outcome": "success"
     };
 
-    analyze(socialid);
+    var result = analyze(socialid, function (data) {
+        outcome.result = data;
+        res.send(JSON.stringify(outcome, null, 3));
+    });
 
-    res.send(JSON.stringify(outcome, null, 3));
 })
 
 
@@ -194,7 +196,6 @@ app.post('/location', function (req, res) {
 
 });
 
-
 app.get('/recommendations', function (req, res) {
 
     const client = yelp.client(yelptoken);
@@ -212,8 +213,7 @@ app.get('/recommendations', function (req, res) {
 });
 
 
-
-function analyze(id) {
+function analyze(id, callback) {
 
     var person = {
         screen_name: id,
@@ -239,7 +239,7 @@ function analyze(id) {
         var concepts = '';
         var entities = '';
 
-        var nodes = []
+        var cusine = []
 
         nlu.analyze({
             'text': body, // Buffer or String
@@ -280,7 +280,7 @@ function analyze(id) {
                             if (response.entities.length > 0) {
                                 console.log(response.entities[0].value);
 
-                                nodes.push(response.entities[0].value);
+                                cusine.push(response.entities[0].value);
                             }
                         }
                     });
@@ -292,9 +292,9 @@ function analyze(id) {
 
                 var responseCount = 0;
 
-                var responseData = {
+                var mindmap = {
                     nodes: [],
-                    edges[]
+                    edges: []
                 };
 
                 var root = {
@@ -303,10 +303,10 @@ function analyze(id) {
                     "x": 0,
                     "y": 0,
                     "size": 5,
-                    color: "#84a0a5"
+                    color: "#0000FF"
                 }
 
-                nodes.push(root);
+                mindmap.nodes.push(root);
 
                 var food = {
                     "id": "food",
@@ -317,6 +317,17 @@ function analyze(id) {
                     color: "#84a0a5"
                 };
 
+                mindmap.nodes.push(food);
+
+
+                var connection = {
+                    "id": "e0",
+                    "source": "root",
+                    "target": "food"
+                };
+
+                mindmap.edges.push(connection);
+
                 concepts.forEach(function (concept) {
                     //                    console.log(concept.text);
 
@@ -326,25 +337,54 @@ function analyze(id) {
                         input = 'mexican';
                     }
 
+                    var x = 1;
+                    var y = 1;
+
+
                     chatbot.sendMessage(input, null, function (response) {
 
                         if (response.intents[0].intent === 'cuisine') {
 
                             if (response.entities.length > 0) {
                                 console.log(response.entities[0].value);
-                                nodes.push(response.entities[0].value);
+                                cusine.push(response.entities[0].value);
                             }
                         }
 
                         responseCount++;
 
-                        var unique = nodes.filter(function (item, i, ar) {
+                        var unique = cusine.filter(function (item, i, ar) {
                             return ar.indexOf(item) === i;
                         });
 
                         if (responseCount === concepts.length) {
-                            console.log(unique);
-                            console.log('should see this once');
+
+                            unique.forEach(function (item) {
+
+                                var newnode = {
+                                    "id": item,
+                                    "label": item,
+                                    "x": x++,
+                                    "y": y++,
+                                    "size": 5,
+                                    color: "#84a0a5"
+                                };
+
+                                mindmap.nodes.push(newnode);
+
+
+                                var edge = {
+                                    "id": "edge-" + item,
+                                    "source": "food",
+                                    "target": item
+                                };
+
+                                mindmap.edges.push(edge);
+                            })
+
+                            console.log(mindmap);
+
+                            callback(mindmap);
                         }
                     });
                 })
@@ -352,7 +392,6 @@ function analyze(id) {
         });
     });
 }
-
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function () {
