@@ -39,21 +39,12 @@ var chatbot = {
 
         conversation.message(params, function (err, data) {
 
-            console.log('conversation data');
-
-            //            console.log(data);
-
             if (err) {
                 console.log("Error in sending message: ", err);
 
             } else {
                 callback(data);
             }
-
-            //    var conv = data.context.conversation_id;
-
-            console.log("Got response from Outpost: ", JSON.stringify(data));
-
         });
     }
 }

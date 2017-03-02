@@ -585,7 +585,7 @@ function personBubble(message) {
     console.log(message);
     var bubble = document.createElement('div');
     bubble.className = 'person';
-    bubble.innerHTML = '<div class = "person-content">' + message + '</div><div class ="person-tail"></div>';
+    bubble.innerHTML = '<div class = "person-content">' + message + '</div>';
 
     var conversation = document.getElementById('conversation');
     conversation.appendChild(bubble);
@@ -598,7 +598,7 @@ function scoutBubble(message) {
     console.log(message);
     var bubble = document.createElement('div');
     bubble.className = 'scoutbot';
-    bubble.innerHTML = '<div class = "scoutbot-content">' + message + '</div><div class ="scoutbot-tail"></div>';
+    bubble.innerHTML = '<div class = "scoutbot-content">' + message + '</div>';
 
     var conversation = document.getElementById('conversation');
     conversation.appendChild(bubble);

@@ -1,23 +1,23 @@
 {
-  "name": "NodejsStarterApp",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app.js"
-  },
-  "dependencies": {
-    "async": "~2.1.4",
-    "body-parser": "~1.16.0",
-    "cfenv": "1.0.x",
-    "chrono-node": "~1.2.5",
-    "express": "4.13.x",
-    "node-pinterest": "0.0.3",
-    "twitter": "~1.7.0",
-    "watson-developer-cloud": "~2.14.4",
-    "yelp-fusion": "1.0.3"
-  },
-  "repository": {},
-  "engines": {
-    "node": "6.x"
-  }
+    "name": "NodejsStarterApp",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "async": "~2.1.4",
+        "body-parser": "~1.16.0",
+        "cfenv": "1.0.x",
+        "chrono-node": "~1.2.5",
+        "express": "4.13.x",
+        "node-pinterest": "0.0.3",
+        "twitter": "~1.7.0",
+        "watson-developer-cloud": "2.21.1",
+        "yelp-fusion": "1.0.3"
+    },
+    "repository": {},
+    "engines": {
+        "node": "6.x"
+    }
 }

@@ -32,6 +32,19 @@ var alchemy_language = watson.alchemy_language({
     api_key: alchemycreds[0].credentials.apikey
 });
 
+var understandingcreds = alchemycreds[2]["natural-language-understanding"][0].credentials;
+
+var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
+
+var nlu = new NaturalLanguageUnderstandingV1({
+    username: understandingcreds.username,
+    password: understandingcreds.password,
+    version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
+});
+
+
+console.log(understandingcreds);
+
 var async = require('async');
 
 var tones = ['anger', 'disgust', 'fear', 'joy', 'sadness'];
@@ -88,6 +101,8 @@ const token = yelp.accessToken('lQtWce8qF1uBCGBgJSf72g', 'QL0CaFA8j8rC8zzCqxZw3V
 /* - - - - - - - - - - */
 
 var alchemycreds = require('./config/credentials.json');
+
+
 
 var Twitter = require('twitter');
 
@@ -197,6 +212,7 @@ app.get('/recommendations', function (req, res) {
 });
 
 
+
 function analyze(id) {
 
     var person = {
@@ -210,6 +226,8 @@ function analyze(id) {
             //        console.log(tweets[0].text);
         }
 
+        var body = '';
+
         tweets.forEach(function (tweet) {
 
             var cleaned = tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
@@ -217,166 +235,124 @@ function analyze(id) {
             body = body + cleaned;
         })
 
-        //    console.log(body);
-
-        var parameters = {
-            text: body,
-            knowledgeGraph: 1
-        };
-
         var keywords = '';
         var concepts = '';
         var entities = '';
 
-        alchemy_language.keywords(parameters, function (err, response) {
+        var nodes = []
 
-            if (err) {
-                console.log('error:', err);
-            } else {
-
-                response.keywords.forEach(function (concept) {
-                    keywords = keywords + concept.text + '\n';
-                });
-
+        nlu.analyze({
+            'text': body, // Buffer or String
+            'features': {
+                'concepts': {},
+                'keywords': {},
+                'entities': {}
             }
-
-            console.log('keywords');
-            console.log('--------');
-
-            console.log(keywords);
-
-        });
-
-
-        alchemy_language.concepts(parameters, function (err, response) {
-
+        }, function (err, response) {
             if (err) {
                 console.log('error:', err);
             } else {
 
-                response.concepts.forEach(function (concept) {
-                    concepts = concepts + concept.text + '\n';
-                });
+                console.log('natural language output');
 
-            }
+                var keywords = response["keywords"];
+                var concepts = response["concepts"];
+                var entities = response["entities"];
+                var categories = response["categories"];
 
-            console.log('concepts');
-            console.log('--------');
+                console.log('');
+                console.log('keywords');
+                console.log('--------');
 
-            console.log(concepts);
+                keywords.forEach(function (keyword) {
+                    //                    console.log(keyword.text);
 
-        });
+                    var input = keyword.text;
 
-        alchemy_language.entities(parameters, function (err, response) {
+                    if (input === 'taco' || input === 'tacos') {
+                        input = 'mexican';
+                    }
 
-            if (err) {
-                console.log('error:', err);
-            } else {
+                    chatbot.sendMessage(input, null, function (response) {
 
-                if (response.entities) {
-                    response.entities.forEach(function (entity) {
-                        entities = entities + entity.text + '\n';
+                        if (response.intents[0].intent === 'cuisine') {
+
+                            if (response.entities.length > 0) {
+                                console.log(response.entities[0].value);
+
+                                nodes.push(response.entities[0].value);
+                            }
+                        }
                     });
+                })
+
+                console.log('');
+                console.log('concepts');
+                console.log('--------');
+
+                var responseCount = 0;
+
+                var responseData = {
+                    nodes: [],
+                    edges[]
+                };
+
+                var root = {
+                    "id": "root",
+                    "label": person.screen_name,
+                    "x": 0,
+                    "y": 0,
+                    "size": 5,
+                    color: "#84a0a5"
                 }
+
+                nodes.push(root);
+
+                var food = {
+                    "id": "food",
+                    "label": "food",
+                    "x": 3,
+                    "y": 0,
+                    "size": 5,
+                    color: "#84a0a5"
+                };
+
+                concepts.forEach(function (concept) {
+                    //                    console.log(concept.text);
+
+                    var input = concept.text;
+
+                    if (input === 'taco' || input === 'tacos') {
+                        input = 'mexican';
+                    }
+
+                    chatbot.sendMessage(input, null, function (response) {
+
+                        if (response.intents[0].intent === 'cuisine') {
+
+                            if (response.entities.length > 0) {
+                                console.log(response.entities[0].value);
+                                nodes.push(response.entities[0].value);
+                            }
+                        }
+
+                        responseCount++;
+
+                        var unique = nodes.filter(function (item, i, ar) {
+                            return ar.indexOf(item) === i;
+                        });
+
+                        if (responseCount === concepts.length) {
+                            console.log(unique);
+                            console.log('should see this once');
+                        }
+                    });
+                })
             }
-
-
-            console.log('entities');
-            console.log('--------');
-
-            console.log(entities);
-
         });
     });
-
-
 }
 
-
-twitterclient.get('statuses/user_timeline', params, function (error, tweets, response) {
-    if (!error) {
-        //        console.log(tweets.length);//
-        //        console.log(tweets[0].text);
-    }
-
-    tweets.forEach(function (tweet) {
-
-        var cleaned = tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
-
-        body = body + cleaned;
-    })
-
-    //    console.log(body);
-
-    var parameters = {
-        text: body,
-        knowledgeGraph: 1
-    };
-
-    var keywords = '';
-    var concepts = '';
-    var entities = '';
-
-    alchemy_language.keywords(parameters, function (err, response) {
-
-        if (err) {
-            console.log('error:', err);
-        } else {
-
-            response.keywords.forEach(function (concept) {
-                keywords = keywords + concept.text + '\n';
-            });
-
-        }
-
-        console.log('keywords');
-        console.log('--------');
-
-        console.log(keywords);
-
-    });
-
-
-    alchemy_language.concepts(parameters, function (err, response) {
-
-        if (err) {
-            console.log('error:', err);
-        } else {
-
-            response.concepts.forEach(function (concept) {
-                concepts = concepts + concept.text + '\n';
-            });
-
-        }
-
-        console.log('concepts');
-        console.log('--------');
-
-        console.log(concepts);
-
-    });
-
-    alchemy_language.entities(parameters, function (err, response) {
-
-        if (err) {
-            console.log('error:', err);
-        } else {
-
-            if (response.entities) {
-                response.entities.forEach(function (entity) {
-                    entities = entities + entity.text + '\n';
-                });
-            }
-        }
-
-
-        console.log('entities');
-        console.log('--------');
-
-        console.log(entities);
-
-    });
-});
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function () {
