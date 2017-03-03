@@ -302,8 +302,8 @@ function analyze(id, callback) {
                     "label": person.screen_name,
                     "x": 0,
                     "y": 0,
-                    "size": 5,
-                    color: "#0000FF"
+                    "size": 8,
+                    color: "#CF413C"
                 }
 
                 mindmap.nodes.push(root);
@@ -313,7 +313,7 @@ function analyze(id, callback) {
                     "label": "food",
                     "x": 3,
                     "y": 0,
-                    "size": 5,
+                    "size": 8,
                     color: "#84a0a5"
                 };
 
@@ -366,8 +366,8 @@ function analyze(id, callback) {
                                     "label": item,
                                     "x": x++,
                                     "y": y++,
-                                    "size": 5,
-                                    color: "#84a0a5"
+                                    "size": 8,
+                                    color: "#84a546"
                                 };
 
                                 mindmap.nodes.push(newnode);

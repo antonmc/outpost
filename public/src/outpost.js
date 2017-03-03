@@ -457,11 +457,25 @@ function sendSocialId(id) {
                 graph: response.result,
                 container: 'recommendation-map',
                 settings: {
+                    forceLabels: true,
                     defaultNodeColor: '#ec5148'
                 }
             });
 
             s.refresh();
+
+            s.bind('clickNode', function (e) {
+                var nodeId = e.data.node.id;
+                //
+                //                s.graph.nodes().forEach(function (n) {
+                //                    if (toKeep[n.id])
+                //                        n.color = n.originalColor;
+                //                    else
+                //                        n.color = '#eee';
+                //                });
+
+                console.log('clicked: ' + nodeId);
+            })
 
             s.startForceAtlas2();
             setTimeout(function () {
