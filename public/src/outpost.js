@@ -191,11 +191,6 @@ function addRecommendation(marker, data) {
 }
 
 
-
-
-
-
-
 /**
  * @summary Enter Keyboard Event.
  *
@@ -434,6 +429,18 @@ function sendSocialId(id) {
 
     // Set parameters for payload to Watson Conversation
 
+    var chart = document.getElementById('recommendation-map');
+
+    while (chart.firstChild) {
+        chart.removeChild(chart.firstChild);
+    }
+
+    var spinner = document.createElement('div');
+    spinner.className = 'spinner';
+    spinner.innerHTML = '<div class="bounce1"></div><div class = "bounce2"></div><div class = "bounce3"></div>'
+
+    chart.appendChild(spinner);
+
     params.socialid = id; // User defined text to be sent to service
 
     if (context) {
@@ -453,6 +460,13 @@ function sendSocialId(id) {
 
             console.log(response);
 
+            var chart = document.getElementById('recommendation-map');
+
+            while (chart.firstChild) {
+                chart.removeChild(chart.firstChild);
+            }
+
+
             s = new sigma({
                 graph: response.result,
                 container: 'recommendation-map',
@@ -466,13 +480,8 @@ function sendSocialId(id) {
 
             s.bind('clickNode', function (e) {
                 var nodeId = e.data.node.id;
-                //
-                //                s.graph.nodes().forEach(function (n) {
-                //                    if (toKeep[n.id])
-                //                        n.color = n.originalColor;
-                //                    else
-                //                        n.color = '#eee';
-                //                });
+
+                sendMessageToWatson(nodeId);
 
                 console.log('clicked: ' + nodeId);
             })
@@ -501,253 +510,4 @@ function submit(event) {
     console.log(twitterid.value);
 
     sendSocialId(twitterid.value);
-}
-
-
-
-var td = {
-    nodes: [{
-            id: "root",
-            label: "johnsmithwords",
-            x: 0,
-            y: 0,
-            size: 5,
-            color: "#84a0a5"
-        },
-        {
-            id: 'food',
-            label: 'food',
-            x: 3,
-            y: 0,
-            size: 5,
-            color: '#84a0a5'
-        },
-        {
-            id: 'seafood',
-            label: 'seafood',
-            x: 8,
-            "y": 2,
-            size: 4,
-            color: '#84a0a5'
-        },
-        {
-            id: 'italian',
-            label: 'italian',
-            x: 4,
-            y: 0,
-            size: 4,
-            color: '#84a0a5'
-        },
-        {
-            id: 'mexican',
-            label: 'mexican',
-            x: 9,
-            y: 4,
-            size: 4,
-            color: '#84a0a5'
-        },
-        {
-            id: 'comfort',
-            label: 'comfort',
-            x: 10,
-            y: 3,
-            size: 4,
-            color: '#84a0a5'
-        }],
-    edges: [{
-            id: 'e0',
-            source: 'root',
-            target: 'food'
-        },
-        {
-            id: 'e1',
-            source: 'food',
-            target: 'seafood'
-        },
-        {
-            id: 'e2',
-            source: 'food',
-            target: 'italian'
-        },
-        {
-            id: 'e3',
-            source: 'food',
-            target: 'mexican'
-        },
-        {
-            id: 'e4',
-            source: 'food',
-            target: 'comfort'
-        }]
-};
-
-var testdata = {
-    "nodes": [
-        {
-            "id": "root",
-            "label": "antonmc",
-            "x": 0,
-            "y": 0,
-            "size": 5,
-            color: "#84a0a5"
-    },
-        {
-            "id": "food",
-            "label": "food",
-            "x": 3,
-            "y": 0,
-            "size": 4,
-            color: "#84a0a5"
-    },
-        {
-            "id": "music",
-            "label": "music",
-            "x": -3,
-            "y": 0,
-            "size": 4,
-            color: "#84a0a5"
-        },
-        {
-            "id": "mexican",
-            "label": "mexican",
-            "x": 4,
-            "y": 0,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "vegan",
-            "label": "vegan",
-            "x": 4,
-            "y": 0,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "italian",
-            "label": "italian",
-            "x": 4,
-            "y": 0,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "indian",
-            "label": "indian",
-            "x": 4,
-            "y": 0,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "indie",
-            "label": "indie",
-            "x": -7,
-            "y": 5,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "acoustic",
-            "label": "acoustic",
-            "x": -8,
-            "y": 8,
-            "size": 2,
-            color: "#84a0a5"
-        },
-        {
-            "id": "jazz",
-            "label": "jazz",
-            "x": -9,
-            "y": 9,
-            "size": 2,
-            color: "#84a0a5"
-        }, {
-            "id": "Mucho Burrito",
-            "label": "Mucho Burrito",
-            "x": -7,
-            "y": 5,
-            "size": 1,
-            color: "#84a0a5"
-        },
-        {
-            "id": "Green Door",
-            "label": "Green Door",
-            "x": -8,
-            "y": 8,
-            "size": 1,
-            color: "#84a0a5"
-        },
-        {
-            "id": "Pure Kitchen",
-            "label": "Pure Kitchen",
-            "x": -9,
-            "y": 9,
-            "size": 1,
-            color: "#84a0a5 "
-        }
-
-  ],
-    "edges": [
-        {
-            "id": "e0",
-            "source": "root",
-            "target": "food"
-    },
-        {
-            "id": "e1",
-            "source": "root",
-            "target": "music"
-    },
-        {
-            "id": "e2",
-            "source": "food",
-            "target": "mexican"
-    },
-        {
-            "id": "e3",
-            "source": "food",
-            "target": "vegan"
-    },
-        {
-            "id": "e4",
-            "source": "food",
-            "target": "italian"
-    },
-        {
-            "id": "e5",
-            "source": "food",
-            "target": "indian"
-    },
-        {
-            "id": "e6",
-            "source": "music",
-            "target": "indie"
-    },
-        {
-            "id": "e7",
-            "source": "music",
-            "target": "acoustic"
-    },
-        {
-            "id": "e8",
-            "source": "music",
-            "target": "jazz"
-    },
-        {
-            "id": "e9",
-            "source": "vegan",
-            "target": "Pure Kitchen"
-    },
-        {
-            "id": "e10",
-            "source": "vegan",
-            "target": "Green Door"
-    },
-        {
-            "id": "e11",
-            "source": "mexican",
-            "target": "Mucho Burrito"
-    }
-  ]
 }

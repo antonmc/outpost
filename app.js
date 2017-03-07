@@ -83,26 +83,9 @@ const token = yelp.accessToken('lQtWce8qF1uBCGBgJSf72g', 'QL0CaFA8j8rC8zzCqxZw3V
     console.log(e);
 });
 
-
-//var PDK = require('node - pinterest ');
-//var pinterest = PDK.init('AXEjA8iP2yLXX6grRfiunleNylq5FKZVAxy3wWlDz9DhgEBDvwAAAAA');
-//
-////pinterest.api('antonmc').then(console.log); 
-//
-//var options = {
-//    qs: {
-//        fields: "antonmc,Anton",
-//        limit: 10
-//    }
-//};
-//
-//pinterest.api('antonmc/pins', options).then(console.log);
-
 /* - - - - - - - - - - */
 
 var alchemycreds = require('./config/credentials.json');
-
-
 
 var Twitter = require('twitter');
 
@@ -143,7 +126,6 @@ app.post('/social', function (req, res) {
 
 })
 
-
 app.post('/outpost', function (req, res) {
 
     res.setHeader('Content-Type', 'application/json');
@@ -180,7 +162,6 @@ app.post('/outpost', function (req, res) {
     });
 });
 
-
 /* For setting the person's location */
 
 app.post('/location', function (req, res) {
@@ -212,6 +193,19 @@ app.get('/recommendations', function (req, res) {
     });
 });
 
+function createNode(id, label, x, y, size, color) {
+
+    var node = {
+        "id": id,
+        "label": label,
+        "x": x,
+        "y": y,
+        "size": size,
+        color: color
+    }
+
+    return node;
+}
 
 function analyze(id, callback) {
 
@@ -265,7 +259,6 @@ function analyze(id, callback) {
                 console.log('--------');
 
                 keywords.forEach(function (keyword) {
-                    //                    console.log(keyword.text);
 
                     var input = keyword.text;
 
@@ -297,28 +290,13 @@ function analyze(id, callback) {
                     edges: []
                 };
 
-                var root = {
-                    "id": "root",
-                    "label": person.screen_name,
-                    "x": 0,
-                    "y": 0,
-                    "size": 8,
-                    color: "#CF413C"
-                }
+                var root = createNode("root", person.screen_name, 0, 0, 8, "#CF413C");
 
                 mindmap.nodes.push(root);
 
-                var food = {
-                    "id": "food",
-                    "label": "food",
-                    "x": 3,
-                    "y": 0,
-                    "size": 8,
-                    color: "#84a0a5"
-                };
+                var food = createNode("food", "food", 3, 0, 8, "#84a0a5");
 
                 mindmap.nodes.push(food);
-
 
                 var connection = {
                     "id": "e0",
@@ -329,7 +307,6 @@ function analyze(id, callback) {
                 mindmap.edges.push(connection);
 
                 concepts.forEach(function (concept) {
-                    //                    console.log(concept.text);
 
                     var input = concept.text;
 
@@ -339,7 +316,6 @@ function analyze(id, callback) {
 
                     var x = 1;
                     var y = 1;
-
 
                     chatbot.sendMessage(input, null, function (response) {
 
@@ -361,17 +337,9 @@ function analyze(id, callback) {
 
                             unique.forEach(function (item) {
 
-                                var newnode = {
-                                    "id": item,
-                                    "label": item,
-                                    "x": x++,
-                                    "y": y++,
-                                    "size": 8,
-                                    color: "#84a546"
-                                };
+                                var newnode = createNode(item, item, x++, y++, 8, "#84a546");
 
                                 mindmap.nodes.push(newnode);
-
 
                                 var edge = {
                                     "id": "edge-" + item,
