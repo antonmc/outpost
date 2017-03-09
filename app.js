@@ -83,6 +83,48 @@ const token = yelp.accessToken('lQtWce8qF1uBCGBgJSf72g', 'QL0CaFA8j8rC8zzCqxZw3V
     console.log(e);
 });
 
+
+var eventbriteAPI = require('node-eventbrite');
+
+var ebtoken = 'BA42Z5JFDVCJQZFL3BGT';
+
+var location = {}
+location.latitude = '45.3407962';
+location.longitude = '-75.6906025';
+location.address = '17 harrier lane, ottawa, k2m2z3'
+
+
+
+var paramaters = {
+    q: 'ux',
+    location: location
+}
+
+try {
+    var api = eventbriteAPI({
+        token: ebtoken,
+        version: 'v3'
+    });
+} catch (error) {
+    console.log(error.message); // the options are missing, this function throws an error.
+}
+
+api.search(paramaters, function (error, data) {
+    if (error)
+        console.log(error.message);
+    else
+
+        data.events.forEach(function (event) {
+        console.log(event.name.text);
+    })
+
+
+    //    console.log(JSON.stringify(data)); // Do something with your data!
+});
+
+
+
+
 /* - - - - - - - - - - */
 
 var alchemycreds = require('./config/credentials.json');
@@ -134,6 +176,47 @@ app.post('/outpost', function (req, res) {
 
     chatbot.sendMessage(req.body.text, req.body.context, function (response) {
 
+
+        switch (response.intents[0].intent) {
+
+        case 'cuisine':
+            console.log('case statement - cuisine');
+            break;
+
+        case 'interest':
+            console.log('case statement - interest');
+
+            var location = {}
+            location.latitude = latitude;
+            location.longitude = longitude;
+
+            var paramaters = {
+                q: response.intents[0].intent,
+                location: location
+            }
+
+            api.search(paramaters, function (error, data) {
+                if (error)
+                    console.log(error.message);
+                else
+
+                    console.log(data.events[0])
+
+                //                data.events.forEach(function (event) {
+                //                    console.log(event.name.text);
+                //                })
+
+                //    console.log(JSON.stringify(data)); // Do something with your data!
+            });
+
+            break;
+
+        default:
+            console.log('case statement - default - ' + response.intents[0].intent);
+            break;
+        }
+
+
         if (response.intents[0].intent === 'cuisine') {
 
             console.log('this is where to call Yelp');
@@ -156,9 +239,13 @@ app.post('/outpost', function (req, res) {
                 console.log(e);
             });
 
+        } else if (response.intents[0].intent === 'interest') {
+            console.log('this is where to call eventbrite');
+
         } else {
             res.send(JSON.stringify(response, null, 3));
         }
+
     });
 });
 
@@ -207,6 +294,28 @@ function createNode(id, label, x, y, size, color) {
     return node;
 }
 
+
+function addChartContent(map, x, y, entities, rawinput, reportedinput, list) {
+    if (entities.length > 0) {
+        console.log(entities[0].value);
+
+        list.push(entities[0].value);
+
+        var input = createNode(reportedinput, reportedinput, x++, y++, 8, "#555");
+
+        map.nodes.push(input);
+
+        var edge = {
+            "id": "edge-" + reportedinput,
+            "source": entities[0].value,
+            "target": reportedinput
+        };
+
+        map.edges.push(edge);
+    }
+}
+
+
 function analyze(id, callback) {
 
     var person = {
@@ -233,7 +342,13 @@ function analyze(id, callback) {
         var concepts = '';
         var entities = '';
 
-        var cusine = []
+        var cuisine = [];
+        var interest = [];
+
+        var edges = [];
+
+        var x = 1;
+        var y = 1;
 
         nlu.analyze({
             'text': body, // Buffer or String
@@ -269,12 +384,11 @@ function analyze(id, callback) {
                     chatbot.sendMessage(input, null, function (response) {
 
                         if (response.intents[0].intent === 'cuisine') {
+                            addChartContent(mindmap, x, y, response.entities, input, response.input.text, cuisine);
+                        }
 
-                            if (response.entities.length > 0) {
-                                console.log(response.entities[0].value);
-
-                                cusine.push(response.entities[0].value);
-                            }
+                        if (response.intents[0].intent === 'interest') {
+                            addChartContent(mindmap, x, y, response.entities, input, response.input.text, interest);
                         }
                     });
                 })
@@ -298,6 +412,10 @@ function analyze(id, callback) {
 
                 mindmap.nodes.push(food);
 
+                var interests = createNode("interest", "interest", -3, 0, 8, "#84a0a5");
+
+                mindmap.nodes.push(interests);
+
                 var connection = {
                     "id": "e0",
                     "source": "root",
@@ -305,6 +423,14 @@ function analyze(id, callback) {
                 };
 
                 mindmap.edges.push(connection);
+
+                var interstconnection = {
+                    "id": "i0",
+                    "source": "root",
+                    "target": "interest"
+                };
+
+                mindmap.edges.push(interstconnection);
 
                 concepts.forEach(function (concept) {
 
@@ -314,22 +440,19 @@ function analyze(id, callback) {
                         input = 'mexican';
                     }
 
-                    var x = 1;
-                    var y = 1;
-
                     chatbot.sendMessage(input, null, function (response) {
 
                         if (response.intents[0].intent === 'cuisine') {
+                            addChartContent(mindmap, x, y, response.entities, input, response.input.text, cuisine);
+                        }
 
-                            if (response.entities.length > 0) {
-                                console.log(response.entities[0].value);
-                                cusine.push(response.entities[0].value);
-                            }
+                        if (response.intents[0].intent === 'interest') {
+                            addChartContent(mindmap, x, y, response.entities, input, response.input.text, interest);
                         }
 
                         responseCount++;
 
-                        var unique = cusine.filter(function (item, i, ar) {
+                        var unique = cuisine.filter(function (item, i, ar) {
                             return ar.indexOf(item) === i;
                         });
 

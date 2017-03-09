@@ -568,7 +568,7 @@
                             'Warning: The renderer "' + a[i] + '" crashed on ".process()"'
                         );
                     } else
-                    this.renderers[a[i]].process();
+                        this.renderers[a[i]].process();
             }
 
         this.render();
@@ -599,7 +599,7 @@
                             'Warning: The renderer "' + a[i] + '" crashed on ".render()"'
                         );
                 } else
-                this.renderers[a[i]].render();
+                    this.renderers[a[i]].render();
 
         return this;
     };
@@ -633,7 +633,7 @@
                                 'Warning: The renderer "' + a[i].id + '" crashed on ".render()"'
                             );
                     } else
-                    a[i].render();
+                        a[i].render();
         } else {
             if (!this.cameraFrames[camera.id]) {
                 a = this.renderersPerCamera[camera.id];
@@ -649,7 +649,7 @@
                                     '" crashed on ".render()"'
                                 );
                         } else
-                        a[i].render();
+                            a[i].render();
 
                 this.cameraFrames[camera.id] = requestAnimationFrame(function () {
                     delete self.cameraFrames[camera.id];
@@ -2858,7 +2858,7 @@
         // {string}
         defaultNodeColor: '#000',
         // {string}
-        defaultLabelSize: 14,
+        defaultLabelSize: 10,
         // {string} Indicates how to choose the edges color. Available values:
         //          "source", "target", "default"
         edgeColor: 'source',

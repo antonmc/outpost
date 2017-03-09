@@ -489,7 +489,7 @@ function sendSocialId(id) {
             s.startForceAtlas2();
             setTimeout(function () {
                 s.stopForceAtlas2();
-            }, 1000)
+            }, 2000)
         }
     }
 
