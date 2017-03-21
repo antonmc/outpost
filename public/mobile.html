@@ -9,23 +9,28 @@
     <link rel="stylesheet" href="stylesheets/style.css">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
 </head>
 
-<body onload="initialize()">
+<body id='body' onload="initialize()" onresize="resize()">
     <nav class="banner" role="navigation">
         <div class="bannerContent">
             <div class="brand">
-
                 <img src="images/outpost.svg" class="logo">
                 <div class="brandname"> <strong>Outpost</strong></div>
             </div>
-
             <div class="links">
                 <div class="link">About</div>
             </div>
         </div>
     </nav>
+
     <div class="layout">
+        <div class="navbar">
+            <div class="navbutton" onclick="chat();">CHAT</div>
+            <div class="navbutton" onclick="mine()">MINE</div>
+            <div class="navbutton" onclick="plan()">PLAN</div>
+        </div>
         <div class="subtext">
             <div class="welcome"><strong>Outpost</strong> is a set of cognitive explorations with <strong>Yelp</strong></div>
             <div class="switcharea">
@@ -38,19 +43,18 @@
             </div>
         </div>
         <div class="divide">
-            <div class="concepts">
+            <div id="concepts" class="concepts">
                 <div class="output">
                     <div id='map' class='map'></div>
                     <div id='list-header' class='list-header'>RECOMMENDATION LIST</div>
                     <div id='list' class='list'>
-
                     </div>
                 </div>
             </div>
             <div class="flip-container" id="flipcontainer">
                 <div class="flipper" id="flipper">
                     <div class="front">
-                        <div class="conversation">
+                        <div id='conversation' class="conversation">
                             <div class="conversation-title-area">
                                 <div class="conversation-image"><img class="conversation-icon" src="images/scout.svg">
                                 </div>
@@ -60,12 +64,12 @@
                                     <div class="conversation-title">Chat with Scout</div>
                                 </div>
                             </div>
-                            <div class="conversation-flow" id="conversation">
+                            <div class="conversation-flow" id="conversationflow">
                                 <div class="scoutbot">
-                                    <div class="scoutbot-content">I'm Scout, a chatbot designed to help you find things on Yelp ... </div>
+                                    <div class="scoutbot-content">I'm Scout, a chatbot designed to help you find restaurants and events ... </div>
                                 </div>
                             </div>
-                            <textarea rows="4" id="chatMessage" class="conversation-input" placeholder="chat to search Yelp ... " onfocus="handleFocus(event)" onkeypress="return handleInput(event)"></textarea>
+                            <textarea rows="4" id="chatMessage" class="conversation-input" placeholder="chat to search Yelp ... " onfocus="handleFocus(event)" onkeypress="return handleInput(event)" onkeypress="return handleInput(event)"></textarea>
                         </div>
                     </div>
                     <div class="back">
@@ -75,17 +79,15 @@
                                 </div>
                                 <div class="conversation-description">
                                     <div class="conversation-header">Social Data Concepts</div>
-
                                     <div class="conversation-title">Recommendations using your media</div>
                                 </div>
                             </div>
                             <div class="details">
                                 <div class="social">
                                     <div class="feeds">
-                                        <label>Twitter Name: </label>
+                                        <label>Twitter ID: </label>
                                         <input id="twitterid" class="social-entry" type="text" name="last_name" value="" maxlength="100" />
                                         <input id="submit" class="social-button" type="submit" value="Submit" onclick="submit()" />
-
                                     </div>
                                 </div>
                                 <div class="recommendations">

@@ -1,17 +1,73 @@
 var params = {}; // Object for parameters sent to the Watson Conversation service
 var context;
 
+var CHAT = 'CHAT';
+var MINE = 'MINE';
+var PLAN = 'PLAN';
+
+var LASTCONCEPT = CHAT;
+
+var SELECTED = CHAT;
+
 var markers = [];
 
 var s;
 
 var bounds = new google.maps.LatLngBounds();
 
+function isMobileDevice() {
+
+    console.log('isMobileDevice');
+    console.log(navigator.userAgent);
+
+    var outcome = false;
+    testExp = new RegExp('Android|webOS|iPhone|iPad|' +
+        'BlackBerry|Windows Phone|' +
+        'Opera Mini|IEMobile|Mobile',
+        'i');
+
+    if (testExp.test(navigator.userAgent)) {
+        outcome = true;
+    }
+
+    return outcome;
+};
+
 function initialize() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
     } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+
+    if (isMobileDevice()) {
+
+        var body = document.getElementById('body');
+
+        var bodyHeight = body.offsetHeight;
+        console.log(body.offsetHeight);
+
+        // 72px + 30?
+
+        var conversation = document.getElementById('conversation');
+        conversation.style.height = bodyHeight - 89 + 'px';
+    }
+}
+
+function resize(event) {
+    //    alert('resize');
+}
+
+function handleFocus(event) {
+    console.log('focus');
+
+    if (isMobileDevice()) {
+
+        //    e.preventDefault();//    e.stopPropagation();
+        window.scrollTo(0, 0);
+
+        var conversation = document.getElementById('conversation');
+        conversation.style.height = '210px';
     }
 }
 
@@ -398,11 +454,9 @@ function personBubble(message) {
     bubble.className = 'person';
     bubble.innerHTML = '<div class = "person-content">' + message + '</div>';
 
-    var conversation = document.getElementById('conversation');
+    var conversation = document.getElementById('conversationflow');
     conversation.appendChild(bubble);
-
-    var objDiv = document.getElementById("conversation");
-    objDiv.scrollTop = objDiv.scrollHeight;
+    conversation.scrollTop = conversation.scrollHeight;
 }
 
 function scoutBubble(message) {
@@ -411,16 +465,13 @@ function scoutBubble(message) {
     bubble.className = 'scoutbot';
     bubble.innerHTML = '<div class = "scoutbot-content">' + message + '</div>';
 
-    var conversation = document.getElementById('conversation');
+    var conversation = document.getElementById('conversationflow');
     conversation.appendChild(bubble);
-
-    var objDiv = document.getElementById("conversation");
-    objDiv.scrollTop = objDiv.scrollHeight;
+    conversation.scrollTop = conversation.scrollHeight;
 }
 
 function flip(event) {
     console.log('flip');
-
     var flipcontainer = document.getElementById('flipper');
     flipcontainer.classList.toggle('rotator');
 }
@@ -510,4 +561,79 @@ function submit(event) {
     console.log(twitterid.value);
 
     sendSocialId(twitterid.value);
+}
+
+function displayMap() {
+    var flipcontainer = document.getElementById('flipper');
+    flipcontainer.style.display = 'none';
+
+    var concepts = document.getElementById('concepts');
+    concepts.style.display = 'block';
+}
+
+function displayInput() {
+    var flipcontainer = document.getElementById('flipper');
+    flipcontainer.style.display = 'block';
+
+    var concepts = document.getElementById('concepts');
+    concepts.style.display = 'none';
+}
+
+function chat() {
+    console.log('chat');
+
+    switch (SELECTED) {
+    case MINE:
+        flip();
+        break;
+
+    case PLAN:
+        displayInput();
+        if (LASTCONCEPT === MINE) {
+            flip();
+        }
+        break;
+    }
+
+    LASTCONCEPT = CHAT;
+    SELECTED = CHAT;
+}
+
+function plan() {
+    console.log('plan')
+
+    switch (SELECTED) {
+
+    case MINE:
+        mine();
+        break;
+
+    case CHAT:
+        chat();
+        break;
+    }
+
+    displayMap();
+
+    SELECTED = PLAN;
+}
+
+function mine() {
+    console.log('mine')
+
+    switch (SELECTED) {
+    case CHAT:
+        flip();
+        break;
+
+    case PLAN:
+        displayInput();
+        if (LASTCONCEPT === CHAT) {
+            flip();
+        }
+        break;
+    }
+
+    LASTCONCEPT = MINE;
+    SELECTED = MINE;
 }

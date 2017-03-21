@@ -452,13 +452,19 @@ function analyze(id, callback) {
 
                         responseCount++;
 
-                        var unique = cuisine.filter(function (item, i, ar) {
+                        var uniquecuisine = cuisine.filter(function (item, i, ar) {
+                            return ar.indexOf(item) === i;
+                        });
+
+                        var uniqueinterest = interest.filter(function (item, i, ar) {
                             return ar.indexOf(item) === i;
                         });
 
                         if (responseCount === concepts.length) {
 
-                            unique.forEach(function (item) {
+                            /* This block sorts out the high level entities of food or interests */
+
+                            uniquecuisine.forEach(function (item) {
 
                                 var newnode = createNode(item, item, x++, y++, 8, "#84a546");
 
@@ -467,6 +473,21 @@ function analyze(id, callback) {
                                 var edge = {
                                     "id": "edge-" + item,
                                     "source": "food",
+                                    "target": item
+                                };
+
+                                mindmap.edges.push(edge);
+                            })
+
+                            uniqueinterest.forEach(function (item) {
+
+                                var newnode = createNode(item, item, x++, y++, 8, "#84a546");
+
+                                mindmap.nodes.push(newnode);
+
+                                var edge = {
+                                    "id": "edge-" + item,
+                                    "source": "interest",
                                     "target": item
                                 };
 

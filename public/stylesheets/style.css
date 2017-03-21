@@ -91,7 +91,7 @@ p {
 }
 
 .welcome {
-    font-size: 12px;
+    font-size: 16px;
     /* margin-top: 26px; */
     /* background: #f5e5c8; */
     /* padding: 10px; */
@@ -317,7 +317,7 @@ a {
     display: flex;
     flex-direction: column;
     border: 1px dashed #888;
-    height: 410px;
+    height: 350px;
     width: 343px;
     border-radius: 4px;
     margin-top: 20px;
@@ -418,7 +418,7 @@ a {
 
 .map {
     width: 100%;
-    height: 400px;
+    height: 340px;
     /* border-radius: 5px; */
     position: relative;
     border-bottom: 1px solid #dbe9eb;
@@ -426,7 +426,7 @@ a {
 }
 
 .recommendation-container {
-    height: 390px;
+    height: 330px;
     display: flex;
     flex-direction: column;
     /*    border: 1px dashed #A5C8CF;*/
@@ -554,13 +554,14 @@ a {
 }
 
 .switcharea {
-    font-size: 12px;
+    font-size: 16px;
     /* margin-top: 26px; */
     /* background: #f5e5c8; */
     /* padding: 10px; */
     /* padding-top: 25px; */
     /* padding-bottom: 10px; */
     border-radius: 4px;
+    font-weight: bold;
     color: #84a546;
     line-height: 24px;
     /* text-align: center; */
@@ -884,6 +885,7 @@ input:checked + .slider:before {
     background: none;
     font-size: 12px;
     font-weight: bold;
+    border-radius: 0;
 }
 
 .social-button {
@@ -952,5 +954,106 @@ input:checked + .slider:before {
     40% {
         -webkit-transform: scale(1.0);
         transform: scale(1.0);
+    }
+}
+
+.navbar {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 800px;
+    align-content: center;
+    align-items: center;
+    border: 1px solid #dbe9eb;
+    border-right: none;
+    height: 30px;
+}
+
+.navbutton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-right: 1px solid #dbe9eb;
+    width: 100%;
+    height: 100%;
+    color: #333;
+    flex-direction: row;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 20px;
+}
+
+
+/* iPhone 6 */
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+    .divide {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        /* margin-top: 40px; */
+    }
+    .map {
+        width: 100%;
+        height: 200px;
+    }
+    .bannerContent {
+        width: 100%;
+    }
+    .navbar {
+        width: 100%;
+        display: flex;
+    }
+    .logo {
+        margin-left: 5px;
+        display: none;
+    }
+    .link {
+        margin-right: 20px;
+    }
+    .banner {
+        height: 40px;
+    }
+    .concepts {
+        display: none;
+    }
+    .subtext {
+        display: none;
+    }
+    .flip-container,
+    .front,
+    .back {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    .conversation {
+        padding: 15px;
+        padding-top: 0;
+        height: 542px;
+        width: 100%;
+        border-radius: 0;
+    }
+    .conversation-flow {
+        height: 100%;
+    }
+    .conversation-title-area {
+        display: none;
+    }
+    .conversation-input {
+        height: 20px;
+    }
+    .brand {
+        margin-left: 20px;
+    }
+    .mindmap {
+        padding: 15px;
+        padding-top: 0;
+    }
+    .builttext {
+        display: none;
     }
 }
