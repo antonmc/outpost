@@ -3,6 +3,8 @@
 //------------------------------------------------------------------------------
 // node.js starter application for Bluemix
 //------------------------------------------------------------------------------
+var x = 1;
+var y = 1;
 
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
@@ -291,17 +293,22 @@ function createNode(id, label, x, y, size, color) {
         color: color
     }
 
+    console.log(node);
+
     return node;
 }
 
 
-function addChartContent(map, x, y, entities, rawinput, reportedinput, list) {
+function addChartContent(map, xcoord, ycoord, entities, rawinput, reportedinput, list) {
     if (entities.length > 0) {
         console.log(entities[0].value);
 
         list.push(entities[0].value);
 
-        var input = createNode(reportedinput, reportedinput, x++, y++, 8, "#555");
+        x = x + 10;
+        y = y + 10;
+
+        var input = createNode(reportedinput, reportedinput, x, y, 8, "#555");
 
         map.nodes.push(input);
 
@@ -324,13 +331,22 @@ function analyze(id, callback) {
     };
 
     twitterclient.get('statuses/user_timeline', person, function (error, tweets, response) {
-        if (!error) {
-            //        console.log(tweets.length);//
-            //        console.log(tweets[0].text);
-        }
-
         var body = '';
-
+        
+        var mindmap = {
+            nodes: [],
+            edges: []
+        };
+        
+        console.log(tweets);
+        
+        if(tweets.errors ){ 
+            var root = createNode("root", 'NOT A WORKING TWITTER ID - TRY AGAIN', 0, 0, 8, "#CF413C");
+            mindmap.nodes.push(root);
+            callback(mindmap);  
+            return;
+        }
+        
         tweets.forEach(function (tweet) {
 
             var cleaned = tweet.text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
@@ -346,9 +362,6 @@ function analyze(id, callback) {
         var interest = [];
 
         var edges = [];
-
-        var x = 1;
-        var y = 1;
 
         nlu.analyze({
             'text': body, // Buffer or String
@@ -399,10 +412,7 @@ function analyze(id, callback) {
 
                 var responseCount = 0;
 
-                var mindmap = {
-                    nodes: [],
-                    edges: []
-                };
+              
 
                 var root = createNode("root", person.screen_name, 0, 0, 8, "#CF413C");
 
@@ -443,11 +453,11 @@ function analyze(id, callback) {
                     chatbot.sendMessage(input, null, function (response) {
 
                         if (response.intents[0].intent === 'cuisine') {
-                            addChartContent(mindmap, x, y, response.entities, input, response.input.text, cuisine);
+                            addChartContent(mindmap, x++, y++, response.entities, input, response.input.text, cuisine);
                         }
 
                         if (response.intents[0].intent === 'interest') {
-                            addChartContent(mindmap, x, y, response.entities, input, response.input.text, interest);
+                            addChartContent(mindmap, x++, y++, response.entities, input, response.input.text, interest);
                         }
 
                         responseCount++;
@@ -466,7 +476,10 @@ function analyze(id, callback) {
 
                             uniquecuisine.forEach(function (item) {
 
-                                var newnode = createNode(item, item, x++, y++, 8, "#84a546");
+                                x = x + 10;
+                                y = y + 10;
+
+                                var newnode = createNode(item, item, x, y, 8, "#84a546");
 
                                 mindmap.nodes.push(newnode);
 
@@ -481,7 +494,10 @@ function analyze(id, callback) {
 
                             uniqueinterest.forEach(function (item) {
 
-                                var newnode = createNode(item, item, x++, y++, 8, "#84a546");
+                                x = x + 10;
+                                y = y + 10;
+
+                                var newnode = createNode(item, item, x, y, 8, "#84a546");
 
                                 mindmap.nodes.push(newnode);
 
@@ -495,7 +511,6 @@ function analyze(id, callback) {
                             })
 
                             console.log(mindmap);
-
                             callback(mindmap);
                         }
                     });

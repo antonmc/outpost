@@ -50,12 +50,11 @@ function initialize() {
         // 72px + 30?
 
         var conversation = document.getElementById('conversation');
-        conversation.style.height = bodyHeight - 89 + 'px';
+        //        conversation.style.height = bodyHeight - 89 + 'px';
     }
 }
 
 function resize(event) {
-    //    alert('resize');
 }
 
 function handleFocus(event) {
@@ -63,11 +62,12 @@ function handleFocus(event) {
 
     if (isMobileDevice()) {
 
-        //    e.preventDefault();//    e.stopPropagation();
-        window.scrollTo(0, 0);
-
-        var conversation = document.getElementById('conversation');
-        conversation.style.height = '210px';
+//        event.preventDefault();
+//        event.stopPropagation();
+//        window.scrollTo(0, 0);
+//
+//        var conversation = document.getElementById('conversation');
+//        conversation.style.height = '210px';
     }
 }
 
@@ -472,8 +472,19 @@ function scoutBubble(message) {
 
 function flip(event) {
     console.log('flip');
-    var flipcontainer = document.getElementById('flipper');
-    flipcontainer.classList.toggle('rotator');
+    var conversation = document.getElementById('conversation');
+    var mindmap = document.getElementById('mindmap');
+    var maparea = document.getElementById('maparea');
+
+    console.log('display: ' + conversation.style.display);
+
+    if (conversation.style.display === 'flex') {
+        conversation.style.display = 'none';
+        mindmap.style.display = 'flex';
+    } else {
+        conversation.style.display = 'flex';
+        mindmap.style.display = 'none';
+    }
 }
 
 function sendSocialId(id) {
@@ -540,7 +551,7 @@ function sendSocialId(id) {
             s.startForceAtlas2();
             setTimeout(function () {
                 s.stopForceAtlas2();
-            }, 2000)
+            }, 1000)
         }
     }
 
@@ -582,38 +593,30 @@ function displayInput() {
 function chat() {
     console.log('chat');
 
-    switch (SELECTED) {
-    case MINE:
-        flip();
-        break;
+var conversation = document.getElementById('conversation');
+    var mindmap = document.getElementById('mindmap');
+    var maparea = document.getElementById('maparea');
 
-    case PLAN:
-        displayInput();
-        if (LASTCONCEPT === MINE) {
-            flip();
-        }
-        break;
-    }
+    console.log('display: ' + conversation.style.display);
 
-    LASTCONCEPT = CHAT;
+    conversation.style.display = 'flex';
+    mindmap.style.display = 'none';
+    maparea.style.display = 'none';
     SELECTED = CHAT;
 }
 
 function plan() {
     console.log('plan')
 
-    switch (SELECTED) {
+    var conversation = document.getElementById('conversation');
+    var mindmap = document.getElementById('mindmap');
+    var maparea = document.getElementById('maparea');
 
-    case MINE:
-        mine();
-        break;
+    console.log('display: ' + conversation.style.display);
 
-    case CHAT:
-        chat();
-        break;
-    }
-
-    displayMap();
+    conversation.style.display = 'none';
+    mindmap.style.display = 'none';
+    maparea.style.display = 'flex';
 
     SELECTED = PLAN;
 }
@@ -621,19 +624,14 @@ function plan() {
 function mine() {
     console.log('mine')
 
-    switch (SELECTED) {
-    case CHAT:
-        flip();
-        break;
+    var conversation = document.getElementById('conversation');
+    var mindmap = document.getElementById('mindmap');
+    var maparea = document.getElementById('maparea');
 
-    case PLAN:
-        displayInput();
-        if (LASTCONCEPT === CHAT) {
-            flip();
-        }
-        break;
-    }
+    console.log('display: ' + conversation.style.display);
 
-    LASTCONCEPT = MINE;
+    conversation.style.display = 'none';
+    mindmap.style.display = 'flex';
+    maparea.style.display = 'none';
     SELECTED = MINE;
 }

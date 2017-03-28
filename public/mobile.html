@@ -40,17 +40,19 @@
                         <input type="checkbox" onchange="flip()">
                         <div class="slider round"></div>
                     </label>
-                    <label>mindmap</label>
+                    <label>graph</label>
                 </div>
             </div>
             <div class="divide">
-                <div class="maparea">
+                <div id="maparea" class="maparea">
                     <div id='map' class='map'></div>
                     <div id='list-header' class='list-header'>RECOMMENDATION LIST</div>
                     <div id='list' class='list'>
                     </div>
                 </div>
-                <div id='conversation' class="infoarea">
+
+
+                <div id='conversation' class="infoarea" style="display:flex;">
                     <div class="conversation-title-area">
                         <div class="conversation-image"><img class="conversation-icon" src="images/scout.svg">
                         </div>
@@ -67,9 +69,34 @@
                     </div>
                     <textarea rows="4" id="chatMessage" class="conversation-input" placeholder="chat to search Yelp ... " onfocus="handleFocus(event)" onkeypress="return handleInput(event)" onkeypress="return handleInput(event)"></textarea>
                 </div>
-
-
-
+                <div id="mindmap" class="mindmap" style="display:none;">
+                    <div class="conversation-title-area">
+                        <div class="conversation-image"><img class="conversation-icon" src="images/fiddle.svg">
+                        </div>
+                        <div class="conversation-description">
+                            <div class="conversation-header">Social Data Concepts</div>
+                            <div class="conversation-title">Recommendations using your media</div>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div class="social">
+                            <div class="feeds">
+                                <label>Twitter ID: </label>
+                                <input id="twitterid" class="social-entry" type="text" name="last_name" value="" maxlength="100" />
+                                <input id="submit" class="social-button" type="submit" value="Submit" onclick="submit()" />
+                            </div>
+                        </div>
+                        <div class="recommendations">
+                            <div class="detail-header">
+                                <!--                                        <div class="detail-number">2</div>-->
+                                <div class="social-title"> RECOMMENDATION MIND MAP</div>
+                            </div>
+                            <div class="recommendation-container">
+                                <div id="recommendation-map" class="recommendation-map"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="builttext">
                 <div class="built">Built with
@@ -88,5 +115,6 @@
 <script src="src/sigma.js"></script>
 <script src="src/sigma.parsers.json.min.js"></script>
 <script src="src/sigma.layout.forceAtlas2.min.js"></script>
+<script src="https://d3js.org/d3.v4.js"></script>
 
 </html>

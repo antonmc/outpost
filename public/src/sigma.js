@@ -2858,7 +2858,7 @@
         // {string}
         defaultNodeColor: '#000',
         // {string}
-        defaultLabelSize: 10,
+        defaultLabelSize: 14,
         // {string} Indicates how to choose the edges color. Available values:
         //          "source", "target", "default"
         edgeColor: 'source',
