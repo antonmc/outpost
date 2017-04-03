@@ -2,10 +2,8 @@ var params = {}; // Object for parameters sent to the Watson Conversation servic
 var context;
 
 var CHAT = 'CHAT';
-var MINE = 'MINE';
-var PLAN = 'PLAN';
-
-var LASTCONCEPT = CHAT;
+var GRAPH = 'GRAPH';
+var MAP = 'MAP';
 
 var SELECTED = CHAT;
 
@@ -39,35 +37,21 @@ function initialize() {
     } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
-
-    if (isMobileDevice()) {
-
-        var body = document.getElementById('body');
-
-        var bodyHeight = body.offsetHeight;
-        console.log(body.offsetHeight);
-
-        // 72px + 30?
-
-        var conversation = document.getElementById('conversation');
-        //        conversation.style.height = bodyHeight - 89 + 'px';
-    }
+    
+    select(CHAT);
 }
 
-function resize(event) {
-}
+function resize(event) {}
 
 function handleFocus(event) {
     console.log('focus');
 
     if (isMobileDevice()) {
-
-//        event.preventDefault();
-//        event.stopPropagation();
-//        window.scrollTo(0, 0);
-//
-//        var conversation = document.getElementById('conversation');
-//        conversation.style.height = '210px';
+        //        event.preventDefault();
+        //        event.stopPropagation();
+        //        window.scrollTo(0, 0);
+        //        var conversation = document.getElementById('conversation');
+        //        conversation.style.height = '210px';
     }
 }
 
@@ -104,6 +88,7 @@ function createInfoWindow(marker, data) {
 
 
 function showPosition(position) {
+
     console.log("Latitude: " + position.coords.latitude +
         " Longitude: " + position.coords.longitude);
 
@@ -211,6 +196,9 @@ function showPosition(position) {
 
 
     sendLocationToServer(position.coords.latitude, position.coords.longitude);
+    setTimeout(function () {
+        google.maps.event.trigger(map, 'resize')
+    }, 600);
 }
 
 
@@ -590,14 +578,54 @@ function displayInput() {
     concepts.style.display = 'none';
 }
 
+function select(aspect) {
+
+    var chatbutton = document.getElementById('chatbutton');
+    var mapbutton = document.getElementById('mapbutton');
+    var graphbutton = document.getElementById('graphbutton');
+
+    mapbutton.style.background = 'white';
+    graphbutton.style.background = 'white';
+    chatbutton.style.background = 'white';
+    mapbutton.style.color = '#888';
+    graphbutton.style.color = '#888';
+    chatbutton.style.color = '#888';
+    mapbutton.style.fontWeight = 'normal';
+    graphbutton.style.fontWeight = 'normal';
+    chatbutton.style.fontWeight = 'normal';
+
+    var selectionColor = '#84a546';
+
+    switch (aspect) {
+
+        case MAP:
+            mapbutton.style.background = selectionColor;
+            mapbutton.style.color = 'white';
+            mapbutton.style.fontWeight = 'bold';
+            break;
+
+        case GRAPH:
+            graphbutton.style.background = selectionColor;
+            graphbutton.style.color = 'white';
+            graphbutton.style.fontWeight = 'bold';
+            break;
+
+        case CHAT:
+            chatbutton.style.background = selectionColor;
+            chatbutton.style.color = 'white';
+            chatbutton.style.fontWeight = 'bold';
+            break;
+    }
+}
+
 function chat() {
     console.log('chat');
 
-var conversation = document.getElementById('conversation');
+    var conversation = document.getElementById('conversation');
     var mindmap = document.getElementById('mindmap');
     var maparea = document.getElementById('maparea');
 
-    console.log('display: ' + conversation.style.display);
+    select(CHAT);
 
     conversation.style.display = 'flex';
     mindmap.style.display = 'none';
@@ -605,33 +633,31 @@ var conversation = document.getElementById('conversation');
     SELECTED = CHAT;
 }
 
-function plan() {
-    console.log('plan')
+function datamap() {
 
     var conversation = document.getElementById('conversation');
     var mindmap = document.getElementById('mindmap');
     var maparea = document.getElementById('maparea');
 
-    console.log('display: ' + conversation.style.display);
+    select(MAP);
 
     conversation.style.display = 'none';
     mindmap.style.display = 'none';
     maparea.style.display = 'flex';
 
-    SELECTED = PLAN;
+    SELECTED = MAP;
 }
 
-function mine() {
-    console.log('mine')
+function graph() {
 
     var conversation = document.getElementById('conversation');
     var mindmap = document.getElementById('mindmap');
     var maparea = document.getElementById('maparea');
 
-    console.log('display: ' + conversation.style.display);
+    select(GRAPH);
 
     conversation.style.display = 'none';
     mindmap.style.display = 'flex';
     maparea.style.display = 'none';
-    SELECTED = MINE;
+    SELECTED = GRAPH;
 }

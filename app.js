@@ -178,12 +178,12 @@ app.post('/outpost', function (req, res) {
 
     chatbot.sendMessage(req.body.text, req.body.context, function (response) {
 
-
         switch (response.intents[0].intent) {
 
         case 'cuisine':
             console.log('case statement - cuisine');
             break;
+                                          
 
         case 'interest':
             console.log('case statement - interest');
