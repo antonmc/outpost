@@ -30,8 +30,9 @@ You can [read more about the motivation for the app](https://www.ibm.com/blogs/b
 8. Create an API key for [Yelp](https://www.yelp.ca/developers)
 9. Create an API key for [Eventbrite](https://www.eventbrite.ca/developer/v3/)
 10. Rename the credentials-template.json file to be credentials.json and update with the values from each of the services above
-11. Run `node app` to start the app
-12. Access the running app in a browser at http://localhost:6001
+11. Upload the conversation/outpost.json file to the watson conversation workspace
+12. Run `node app` to start the app
+13. Access the running app in a browser at http://localhost:6001
 
 
 
