@@ -28,13 +28,9 @@ var appEnv = cfenv.getAppEnv();
 
 var watson = require('watson-developer-cloud');
 
-var alchemycreds = require('./config/credentials.json');
+var config = require('./config/credentials.json');
 
-var alchemy_language = watson.alchemy_language({
-    api_key: alchemycreds[0].credentials.apikey
-});
-
-var understandingcreds = alchemycreds[2]["natural-language-understanding"][0].credentials;
+var understandingcreds = config.nlu.credentials;
 
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 
@@ -43,9 +39,6 @@ var nlu = new NaturalLanguageUnderstandingV1({
     password: understandingcreds.password,
     version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2016_01_23
 });
-
-
-console.log(understandingcreds);
 
 var async = require('async');
 
@@ -64,8 +57,9 @@ var yelptoken;
 
 const yelp = require('yelp-fusion');
 
-const token = yelp.accessToken('lQtWce8qF1uBCGBgJSf72g', 'QL0CaFA8j8rC8zzCqxZw3Vzi8nzlR3fG2Ou3IPPS60KuD5Mw3hJVW8yQAahe26Fd').then(response => {
-    //    console.log(response.jsonBody.access_token);
+var yelpCredentials = config.yelp;
+
+const token = yelp.accessToken(yelpCredentials.clientId, yelpCredentials.secret).then(response => {
 
     yelptoken = response.jsonBody.access_token;
 
@@ -88,14 +82,13 @@ const token = yelp.accessToken('lQtWce8qF1uBCGBgJSf72g', 'QL0CaFA8j8rC8zzCqxZw3V
 
 var eventbriteAPI = require('node-eventbrite');
 
+var eventbriteCredentials = config.eventbrite;
+
 var ebtoken = 'BA42Z5JFDVCJQZFL3BGT';
 
 var location = {}
 location.latitude = '45.3407962';
 location.longitude = '-75.6906025';
-location.address = '17 harrier lane, ottawa, k2m2z3'
-
-
 
 var paramaters = {
     q: 'ux',
@@ -104,7 +97,7 @@ var paramaters = {
 
 try {
     var api = eventbriteAPI({
-        token: ebtoken,
+        token: eventbriteCredentials.token,
         version: 'v3'
     });
 } catch (error) {
@@ -129,16 +122,13 @@ api.search(paramaters, function (error, data) {
 
 /* - - - - - - - - - - */
 
-var alchemycreds = require('./config/credentials.json');
+var config = require('./config/credentials.json');
 
 var Twitter = require('twitter');
 
-var twitterclient = new Twitter({
-    consumer_key: 'T8eAr9Frhc0oPi6VnagQOEOur',
-    consumer_secret: 'ASRuFAzn0b3VPmfo6mdGXYau4BSs9HOtdu2evHm5IcedK8qjat',
-    access_token_key: '15673818-vUX8sLguRCL0NVtn4AQXB6gXVDP8Ni4LUOwl6U2z6',
-    access_token_secret: 'sHJ1rQiukME7roJDmG333AT39rhn2AksnVxAbg3BGOeks'
-});
+var twitterCredentials = config.twitter;
+
+var twitterclient = new Twitter(twitterCredentials);
 
 var params = {
     screen_name: 'johnsmithwords',
@@ -201,14 +191,7 @@ app.post('/outpost', function (req, res) {
                 if (error)
                     console.log(error.message);
                 else
-
-                    console.log(data.events[0])
-
-                //                data.events.forEach(function (event) {
-                //                    console.log(event.name.text);
-                //                })
-
-                //    console.log(JSON.stringify(data)); // Do something with your data!
+                    console.log(data.events[0]);
             });
 
             break;
