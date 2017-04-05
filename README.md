@@ -20,7 +20,7 @@ You can [read more about the motivation for the app](https://www.ibm.com/blogs/b
 
 ## Run the app locally
 
-1. [Install Node.js]: https://nodejs.org/en/download/
+1. [Install Node.js](https://nodejs.org/en/download/) if necessary
 2. Clone this repo locally
 3. cd into the outpost directory
 4. Run `npm install` to install the app's dependencies
